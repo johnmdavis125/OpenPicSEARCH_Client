@@ -1,0 +1,41 @@
+import React from 'react';
+import Container from 'react-bootstrap/Container'; 
+import Row from 'react-bootstrap/Row'; 
+import Col from 'react-bootstrap/Col'; 
+import Image from 'react-bootstrap/Image';
+import Nav from 'react-bootstrap/Nav';
+import "./Header.css"; 
+
+
+const Header = () => {  
+    return (
+        <div>
+            <Container fluid className="box" style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
+                <Row>
+                    <Col sm ={11} md={8} lg={7} xl={6} xxl={5} >
+                        <Image className="pixLogo" src="OpenPixLogoV2.png" />
+                    </Col>
+                </Row>
+                <Row>
+                    <Nav className="justify-content-end customNav">
+                        <Nav.Item>
+                            <Nav.Link href="#" style={{color: "whitesmoke"}}>About</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link href="#" style={{color: "whitesmoke"}}>Search</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link href="#" style={{color: "whitesmoke"}}>Queue</Nav.Link>
+                        </Nav.Item>
+                        <Nav.Item>
+                            <Nav.Link href="#" style={{color: "whitesmoke"}}>Collections</Nav.Link>
+                        </Nav.Item>
+                    </Nav>
+                </Row>
+
+            </Container>
+        </div>
+    )
+}
+
+export default Header; 
