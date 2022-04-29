@@ -6,7 +6,7 @@ const App = () => {
     return (
     <div>
         <Header /> 
-        <Search />
+        <Search label={null} placeholder="Enter Search Term..." btnText="Search" altText="All images sourced from public domain/open license databases. Enjoy :)" />
     </div>
     )
 }
