@@ -1,22 +1,12 @@
 import React from 'react';
+import Panel from './Panel'; 
 
-const PanelContainer = ({images}) => {
-      
-    const renderedImages = images.map((image) => {
-        return (
-            <div key={image.id} style={{border: "1px solid blue"}}>
-                <img src={image.urls.small} />
-            </div>
-        )
-    })
-   
+const PanelContainer = ({unsplashImages}) => {   
     return (
         <div style={{border: "1px solid red"}}>
             <div>Panel Container</div>
 
-            <div>
-                RenderedImages: {renderedImages}
-            </div>
+        <Panel images={unsplashImages} apiName="Unsplash"/> 
         </div>
     )
 }

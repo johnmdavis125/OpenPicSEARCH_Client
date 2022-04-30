@@ -6,7 +6,7 @@ import PanelContainer from './PanelContainer';
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;     
 
 const Search = () => {
-    const [images, setImages] = useState([]); 
+    const [unsplashImages, setUnsplashImages] = useState([]); 
 
     async function searchUnsplash(searchTerm) {
         try {
@@ -16,7 +16,7 @@ const Search = () => {
                   Authorization: `Client-ID ${UNSPLASH_KEY}`
               }
           });
-          setImages(response.data.results); 
+          setUnsplashImages(response.data.results); 
         } catch (error) {
           console.error(error);
         }
@@ -25,7 +25,7 @@ const Search = () => {
     return (
         <div>
             <SearchBar onSubmit={searchUnsplash} label={null} placeholder="Enter Search Term..." btnText="Search" altText="All images sourced from public domain/open license databases. Enjoy :)" />
-            <PanelContainer images={images}/>
+            <PanelContainer unsplashImages={unsplashImages}/>
         </div>
     )
 }
