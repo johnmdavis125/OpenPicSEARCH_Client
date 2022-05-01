@@ -1,23 +1,19 @@
 import React from 'react';
+import ImageCard from './ImageCard';
+import "./Panel.css";
 
 const Panel = ({images, apiName}) => {
     
-    const renderedImages = images.map((image) => {
+    const renderedImages = images.map((image) => {       
         return (
-            <div key={image.id} style={{border: "1px solid blue"}}>
-                <img src={image.urls.small} />
-            </div>
+            <ImageCard key={image.id} image={image} />
         )
     })
 
     return (
         <div>
             <div>{apiName} Panel</div>
-            
-            <div>
-                {renderedImages}
-            </div>
-            
+            <div className="imagesContainer">{renderedImages}</div>        
         </div>
     )
 }
