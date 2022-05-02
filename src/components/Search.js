@@ -3,10 +3,13 @@ import { useState } from 'react';
 import axios from 'axios'; 
 import SearchBar from './SearchBar';
 import PanelContainer from './PanelContainer';
+import TestPanelContainer from './TestPanelContainer';
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;     
 
 const Search = () => {
     const [unsplashImages, setUnsplashImages] = useState([]); 
+    const [pexelsImages, setPexelsImages] = useState([{urls: {regular: 'pexelsValue1'}}]); 
+    const [pixabayImages, setPixabayImages] = useState([{urls: { regular: 'pixabayValue1'}}]); 
 
     async function searchUnsplash(searchTerm) {
         try {
@@ -28,7 +31,16 @@ const Search = () => {
     return (
         <div>
             <SearchBar onSubmit={searchUnsplash} label={null} placeholder="Enter Search Term..." btnText="Search" altText="All images sourced from public domain/open license databases. Enjoy :)" />
-            <PanelContainer unsplashImages={unsplashImages}/>
+            {/* <PanelContainer 
+                unsplashImages={unsplashImages}
+                pexelsImages={pexelsImages}
+                pixabayImages={pixabayImages}
+            /> */}
+            <TestPanelContainer 
+                unsplashImages={unsplashImages}
+                pexelsImages={pexelsImages}
+                pixabayImages={pixabayImages} 
+            />
         </div>
     )
 }
