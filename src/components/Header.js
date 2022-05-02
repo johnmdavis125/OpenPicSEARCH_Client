@@ -12,7 +12,7 @@ const Header = () => {
         <div>
             <Container fluid className="box" style={{display: "flex", flexDirection: "column", justifyContent: "space-between"}}>
                 <Row>
-                    <Col sm ={11} md={8} lg={7} xl={6} xxl={5} >
+                    <Col sm ={11} md={8} lg={6} xl={5} xxl={4} >
                         <Image className="pixLogo" src="OpenPixLogoV2.png" />
                     </Col>
                 </Row>

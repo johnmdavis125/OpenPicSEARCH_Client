@@ -15,12 +15,12 @@ const Panel = ({images, apiName}) => {
     }
     
     const numImages = images.length; 
-    const resultsPerPage = 10; 
-    const numPages = numImages / resultsPerPage; 
+    const desiredResultsPerPage = 10; 
+    const numPages = numImages / desiredResultsPerPage; 
     let filteredArray = []; 
     const filterImageArrayToCurrentPanelPage = (arrImages) => {
-        const firstImageOnPage = resultsPerPage * currentPage;
-        const lastImageOnPage = firstImageOnPage + resultsPerPage;
+        const firstImageOnPage = desiredResultsPerPage * currentPage;
+        const lastImageOnPage = firstImageOnPage + desiredResultsPerPage;
         filteredArray = arrImages.slice(firstImageOnPage, lastImageOnPage); 
         return filteredArray; 
     }
@@ -34,7 +34,7 @@ const Panel = ({images, apiName}) => {
     let leftButtonDisabled = false; 
     if (currentPage === 0){leftButtonDisabled = true;}
 
-    
+
     const renderedImages = filteredArray.map((image) => {       
         return (
             <ImageCard key={image.id} image={image} />
@@ -42,11 +42,18 @@ const Panel = ({images, apiName}) => {
     })
 
     return (
-        <div>
-            <div>{apiName} Panel</div>
-            <button onClick={decrementResults} disabled={leftButtonDisabled}>Left Arrow</button>
-            <div className="imagesContainer">{renderedImages}</div>        
-            <button onClick={incrementResults} disabled={rightButtonDisabled}>Right Arrow</button>
+        <div className="panelMainDiv">
+            <div className="upperDiv"><h5 className="panelTitle">{apiName}</h5></div>
+            <div style={{display: 'flex'}}>
+
+                <button onClick={decrementResults} disabled={leftButtonDisabled} className="prev" >&#8249;</button>
+
+                <div style={{flexBasis: '90%'}} className="imagesContainer">{renderedImages}</div>        
+
+                <button onClick={incrementResults} disabled={rightButtonDisabled} className="next">&#8250;</button>
+
+                {/* <button onClick={incrementResults} disabled={rightButtonDisabled}>Right Arrow</button> */}
+            </div>
         </div>
     )
 }
