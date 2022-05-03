@@ -1,6 +1,7 @@
 import React from 'react';
 import Panel from './Panel'; 
-import { useState, useRef } from 'react'; 
+import { useState } from 'react'; 
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const TestPanelContainer = ({ unsplashImages, pexelsImages, pixabayImages }) => {
     
@@ -10,17 +11,18 @@ const TestPanelContainer = ({ unsplashImages, pexelsImages, pixabayImages }) => 
         pixabay: 1
     }); 
 
+    let panelsInput;
+    let numPexelsPanels = panels.pexels; 
+    let numUnsplashPanels = panels.unsplash;
+    let numPixabayPanels = panels.pixabay;  
+    // Delete Panels Button(s)
     const onDeleteClick = (clickedPanel) => {
         console.log(`delete button clicked on panel: ${clickedPanel}`); 
         
-        let setPanelsInput;
-        let numPexelsPanels = panels.pexels; 
-        let numUnsplashPanels = panels.unsplash;
-        let numPixabayPanels = panels.pixabay;  
         if (clickedPanel === 'Pexels' && numPexelsPanels === 0){
             return; 
         } else if (clickedPanel === 'Pexels'){
-            setPanelsInput = {
+            panelsInput = {
             pexels: numPexelsPanels - 1,
             unsplash: numUnsplashPanels,
             pixabay: numPixabayPanels
@@ -30,7 +32,7 @@ const TestPanelContainer = ({ unsplashImages, pexelsImages, pixabayImages }) => 
         if (clickedPanel === 'Unsplash' && numUnsplashPanels === 0){
             return;
         } else if (clickedPanel === 'Unsplash'){
-            setPanelsInput = {
+            panelsInput = {
                 pexels: numPexelsPanels,
                 unsplash: numUnsplashPanels - 1,
                 pixabay: numPixabayPanels
@@ -40,15 +42,47 @@ const TestPanelContainer = ({ unsplashImages, pexelsImages, pixabayImages }) => 
         if (clickedPanel === 'Pixabay' && numPixabayPanels === 0){
             return;
         } else if (clickedPanel === 'Pixabay'){
-            setPanelsInput = {
+            panelsInput = {
                 pexels: numPexelsPanels,
                 unsplash: numUnsplashPanels,
                 pixabay: numPixabayPanels - 1
             }
         }
-        setPanels(setPanelsInput); 
+        setPanels(panelsInput); 
     }
     
+    // Dropdown
+    let dropdownDisabled = false; 
+    if (numPexelsPanels + numUnsplashPanels + numPixabayPanels === 3){
+        dropdownDisabled = true; 
+    }
+    const onAddPanelDropdownClick = (event) => {
+        const selection = event; 
+        if (selection === 'pexels'){
+            panelsInput = {
+                pexels: numPexelsPanels + 1,
+                unsplash: numUnsplashPanels,
+                pixabay: numPixabayPanels
+            }
+        } else if (selection === 'unsplash'){
+            panelsInput = {
+                pexels: numPexelsPanels,
+                unsplash: numUnsplashPanels + 1,
+                pixabay: numPixabayPanels
+            } 
+        } else if (selection === 'pixabay'){
+            panelsInput = {
+                pexels: numPexelsPanels,
+                unsplash: numUnsplashPanels,
+                pixabay: numPixabayPanels + 1
+            }
+        } else {
+            console.log('invalid response'); 
+        }
+        setPanels(panelsInput); 
+    }    
+
+    // Conditional Render Panels
     let arrKeys = Object.keys(panels);
     console.log(`arrKeys: ${arrKeys}`); 
     let itemsToRender = []; 
@@ -65,12 +99,22 @@ const TestPanelContainer = ({ unsplashImages, pexelsImages, pixabayImages }) => 
             }
          }
     }      
-
-    console.log(`itemsToRender: ${itemsToRender}`); 
+    // console.log(`itemsToRender: ${itemsToRender}`); 
 
     return (
         <div>
-            {itemsToRender}
+            <div>{itemsToRender}</div>
+            <Dropdown onSelect={onAddPanelDropdownClick}>
+                <Dropdown.Toggle variant="success" id="dropdown-basic" disabled={dropdownDisabled}>
+                    Add Panel
+                </Dropdown.Toggle>
+
+                <Dropdown.Menu>
+                    <Dropdown.Item eventKey="pexels">Pexels</Dropdown.Item>
+                    <Dropdown.Item eventKey="unsplash">Unsplash</Dropdown.Item>
+                    <Dropdown.Item eventKey="pixabay">Pixabay</Dropdown.Item>
+                </Dropdown.Menu>
+            </Dropdown>
         </div> 
     )
 }
