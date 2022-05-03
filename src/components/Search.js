@@ -3,13 +3,14 @@ import { useState } from 'react';
 import axios from 'axios'; 
 import SearchBar from './SearchBar';
 import PanelContainer from './PanelContainer';
-import TestPanelContainer from './TestPanelContainer';
-const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;     
+const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;  
+const PEXELS_KEY = process.env.REACT_APP_PEXELS_API_KEY;   
+const PIXABAY_KEY = process.env.REACT_APP_PIXABAY_API_KEY;
 
 const Search = () => {
     const [unsplashImages, setUnsplashImages] = useState([]); 
-    const [pexelsImages, setPexelsImages] = useState([{urls: {regular: 'pexelsValue1'}}]); 
-    const [pixabayImages, setPixabayImages] = useState([{urls: { regular: 'pixabayValue1'}}]); 
+    const [pexelsImages, setPexelsImages] = useState([]); 
+    const [pixabayImages, setPixabayImages] = useState([]); 
 
     async function searchUnsplash(searchTerm) {
         try {
@@ -28,15 +29,54 @@ const Search = () => {
         }
       }
 
+    async function searchPexels(searchTerm) {
+        try {
+            const response = await axios.get('https://api.pexels.com/v1/search', {
+                params: {
+                    query: searchTerm,
+                    per_page: 30
+                },
+                headers: {
+                    Authorization: PEXELS_KEY
+                }
+            }); 
+            setPexelsImages(response.data.photos);
+        } catch (error) {
+            console.error(error); 
+        }
+    }
+
+    async function searchPixabay(searchTerm) {
+        try {
+            const pixabayBaseURL = 'https://pixabay.com/api/'
+            const pixabayURL = `${pixabayBaseURL}?key=${PIXABAY_KEY}&q=${encodeURIComponent(searchTerm)}`;
+            const response = await axios.get(pixabayURL, {
+                params: {
+                    per_page: 30
+                }
+            }); 
+            setPixabayImages(response.data.hits); 
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    const runAPISearch = (searchTerm) => {
+        searchUnsplash(searchTerm);
+        searchPexels(searchTerm);
+        searchPixabay(searchTerm);
+    }
+
     return (
         <div>
-            <SearchBar onSubmit={searchUnsplash} label={null} placeholder="Enter Search Term..." btnText="Search" altText="All images sourced from public domain/open license databases. Enjoy :)" />
-            {/* <PanelContainer 
-                unsplashImages={unsplashImages}
-                pexelsImages={pexelsImages}
-                pixabayImages={pixabayImages}
-            /> */}
-            <TestPanelContainer 
+            <SearchBar 
+                onSubmit={runAPISearch}
+                label={null} 
+                placeholder="Enter Search Term..." 
+                btnText="Search" 
+                altText="All images sourced from public domain/open license databases. Enjoy :)" 
+            />
+            <PanelContainer 
                 unsplashImages={unsplashImages}
                 pexelsImages={pexelsImages}
                 pixabayImages={pixabayImages} 

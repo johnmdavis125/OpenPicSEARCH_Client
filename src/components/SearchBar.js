@@ -9,8 +9,6 @@ const SearchBar = ({onSubmit, label, placeholder, btnText, altText}) => {
   
     const onFormSubmit = (event) => {
         event.preventDefault(); 
-
-        // OnSubmit() === searchUnsplash()
         onSubmit(term); 
     }
 
@@ -21,8 +19,8 @@ const SearchBar = ({onSubmit, label, placeholder, btnText, altText}) => {
                 <div>
                     <Form.Label>{label}</Form.Label>
                 </div>
-                <div style={{display: "flex"}}>
-                    <Form.Control 
+                <div style={{display: 'flex', maxWidth: '1000px'}}>
+                    <Form.Control
                         type="text"
                         placeholder={placeholder}
                         value={term}
