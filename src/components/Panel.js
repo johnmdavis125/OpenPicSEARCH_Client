@@ -1,10 +1,11 @@
 import React from 'react';
-import { useState } from 'react'; 
+import { useState, useEffect, useRef } from 'react'; 
 import ImageCard from './ImageCard';
+import CloseButton from 'react-bootstrap/CloseButton';
 import "./Panel.css";
 
-const Panel = ({images, apiName}) => {
-    
+const Panel = ({images, apiName, onDeleteClick}) => {
+
     const [currentPage, setCurrentPage] = useState(0);
     
     const incrementResults = () => {
@@ -41,9 +42,40 @@ const Panel = ({images, apiName}) => {
         )
     })
 
+    // const ref = useRef(); 
+    // useEffect(() => {
+    //     ref.current.addEventListener('click', () => {
+    //         // console.log(event.target.value);
+    //         console.log(ref.current);  
+    //         onDeleteClick(ref.current);
+    //     }) 
+    // },[]);
+
+    // const [panelToDelete, setPanelToDelete] = useState({}); 
+    
+    const deleteClickHelper = () => {
+        // setPanelToDelete(event.target);
+        // console.log(event.target);  
+        
+        onDeleteClick(apiName); 
+    }
+    
+    // useEffect(() => {
+    //     const panelToDelete = document.querySelector('.closeButton'); 
+    //     panelToDelete.addEventListener('click', (event) => {
+    //         console.log(panelToDelete); 
+    //         console.log(event.target.value); 
+    //     }); 
+    // },[]);
+
     return (
         <div className="panelMainDiv">
-            <div className="upperDiv"><h5 className="panelTitle">{apiName}</h5></div>
+            <div className="upperDiv">
+                <h5 className="panelTitle" style={{paddingLeft: '15px'}}>{apiName}</h5>
+                <CloseButton onClick={deleteClickHelper} className="closeButton" style={{color: 'white', opacity: '0.5', paddingRight: '15px'}} variant='white'></CloseButton>
+                
+                {/* <button style={{color: 'white', padding: '0 15px 0 15px', border: 'none', fontSize: '15px', backgroundColor: 'rgba(0,0,0,0.7)'}}>x</button> */}
+            </div>
             <div style={{display: 'flex'}}>
 
                 <button onClick={decrementResults} disabled={leftButtonDisabled} className="prev" >&#8249;</button>

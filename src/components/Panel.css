@@ -6,6 +6,7 @@
 .upperDiv {
     display: flex;
     justify-content: center;
+    background-color: black;
 }
 
 .imagesContainer {
@@ -30,6 +31,7 @@
 
 button {
     text-decoration: none;
+    background-color: black;
     display: inline-block;
     padding: 8px 16px;
 }
