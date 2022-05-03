@@ -1,6 +1,8 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react'; 
-import ImageCard from './ImageCard';
+import ImageCardUnsplash from './ImageCardUnsplash';
+import ImageCardPexels from './ImageCardPexels';
+import ImageCardPixabay from './ImageCardPixabay';
 import CloseButton from 'react-bootstrap/CloseButton';
 import "./Panel.css";
 
@@ -35,46 +37,42 @@ const Panel = ({images, apiName, onDeleteClick}) => {
     let leftButtonDisabled = false; 
     if (currentPage === 0){leftButtonDisabled = true;}
 
-
-    const renderedImages = filteredArray.map((image) => {       
-        return (
-            <ImageCard key={image.id} image={image} />
-        )
-    })
-
-    // const ref = useRef(); 
-    // useEffect(() => {
-    //     ref.current.addEventListener('click', () => {
-    //         // console.log(event.target.value);
-    //         console.log(ref.current);  
-    //         onDeleteClick(ref.current);
-    //     }) 
-    // },[]);
-
-    // const [panelToDelete, setPanelToDelete] = useState({}); 
+    let renderedImages;
+    if (apiName === 'Unsplash'){
+        renderedImages = filteredArray.map((image) => {       
+            console.log(`unsplash: ${Object.keys(image)}`);
+            return (
+                <ImageCardUnsplash key={image.id} image={image} />
+            )
+        });
+    } else if (apiName === 'Pexels'){
+        renderedImages = filteredArray.map((image) => {       
+            console.log(`pexels: ${Object.keys(image)}`);
+            return (
+                <ImageCardPexels key={image.id} image={image} />
+            )
+        });        
+    } else if (apiName === 'Pixabay') {
+        renderedImages = filteredArray.map((image) => {
+            console.log(`pixabay: ${Object.keys(image)}`);
+            return (
+                <ImageCardPixabay key={image.id} image={image} />
+            )
+        });
+    } else {
+        console.log('invalid apiName');
+    }
     
-    const deleteClickHelper = () => {
-        // setPanelToDelete(event.target);
-        // console.log(event.target);  
-        
+    const deleteClickHelper = () => {       
         onDeleteClick(apiName); 
     }
     
-    // useEffect(() => {
-    //     const panelToDelete = document.querySelector('.closeButton'); 
-    //     panelToDelete.addEventListener('click', (event) => {
-    //         console.log(panelToDelete); 
-    //         console.log(event.target.value); 
-    //     }); 
-    // },[]);
-
     return (
         <div className="panelMainDiv">
             <div className="upperDiv">
                 <h5 className="panelTitle" style={{paddingLeft: '15px'}}>{apiName}</h5>
                 <CloseButton onClick={deleteClickHelper} className="closeButton" style={{color: 'white', opacity: '0.5', paddingRight: '15px'}} variant='white'></CloseButton>
                 
-                {/* <button style={{color: 'white', padding: '0 15px 0 15px', border: 'none', fontSize: '15px', backgroundColor: 'rgba(0,0,0,0.7)'}}>x</button> */}
             </div>
             <div style={{display: 'flex'}}>
 
@@ -83,8 +81,6 @@ const Panel = ({images, apiName, onDeleteClick}) => {
                 <div style={{flexBasis: '90%'}} className="imagesContainer">{renderedImages}</div>        
 
                 <button onClick={incrementResults} disabled={rightButtonDisabled} className="next">&#8250;</button>
-
-                {/* <button onClick={incrementResults} disabled={rightButtonDisabled}>Right Arrow</button> */}
             </div>
         </div>
     )
