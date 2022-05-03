@@ -10,13 +10,14 @@ const Panel = ({images, apiName, onDeleteClick}) => {
 
     const [currentPage, setCurrentPage] = useState(0);
     
+    // Pagination
     const incrementResults = () => {
         setCurrentPage(currentPage + 1);
     }    
     const decrementResults = () => {
         setCurrentPage(currentPage - 1);
     }
-    
+
     const numImages = images.length; 
     const desiredResultsPerPage = 10; 
     const numPages = numImages / desiredResultsPerPage; 
@@ -31,16 +32,17 @@ const Panel = ({images, apiName, onDeleteClick}) => {
     if (numImages){
         filterImageArrayToCurrentPanelPage(images); 
     }
+ 
 
     let rightButtonDisabled = false;
     if (currentPage === numPages - 1){rightButtonDisabled = true;}
     let leftButtonDisabled = false; 
     if (currentPage === 0){leftButtonDisabled = true;}
 
+    // Pass filtered results into ImageCards
     let renderedImages;
     if (apiName === 'Unsplash'){
         renderedImages = filteredArray.map((image) => {       
-            console.log(`unsplash: ${Object.keys(image)}`);
             return (
                 <ImageCardUnsplash key={image.id} image={image} />
             )
@@ -54,7 +56,6 @@ const Panel = ({images, apiName, onDeleteClick}) => {
         });        
     } else if (apiName === 'Pixabay') {
         renderedImages = filteredArray.map((image) => {
-            console.log(`pixabay: ${Object.keys(image)}`);
             return (
                 <ImageCardPixabay key={image.id} image={image} />
             )
@@ -66,7 +67,6 @@ const Panel = ({images, apiName, onDeleteClick}) => {
     const deleteClickHelper = () => {       
         onDeleteClick(apiName); 
     }
-    
     return (
         <div className="panelMainDiv">
             <div className="upperDiv">
@@ -75,12 +75,20 @@ const Panel = ({images, apiName, onDeleteClick}) => {
                 
             </div>
             <div style={{display: 'flex'}}>
+                <button
+                    onClick={decrementResults}
+                    disabled={leftButtonDisabled}
+                    className="prev">&#8249;
+                </button>
 
-                <button onClick={decrementResults} disabled={leftButtonDisabled} className="prev" >&#8249;</button>
+                <div style={{flexBasis: '90%'}} className="imagesContainer">    {renderedImages}
+                </div>        
 
-                <div style={{flexBasis: '90%'}} className="imagesContainer">{renderedImages}</div>        
-
-                <button onClick={incrementResults} disabled={rightButtonDisabled} className="next">&#8250;</button>
+                <button 
+                    onClick={incrementResults}
+                    disabled={rightButtonDisabled}
+                    className="next">&#8250;
+                </button>
             </div>
         </div>
     )

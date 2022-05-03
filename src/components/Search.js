@@ -69,7 +69,13 @@ const Search = () => {
 
     return (
         <div>
-            <SearchBar onSubmit={runAPISearch} label={null} placeholder="Enter Search Term..." btnText="Search" altText="All images sourced from public domain/open license databases. Enjoy :)" />
+            <SearchBar 
+                onSubmit={runAPISearch}
+                label={null} 
+                placeholder="Enter Search Term..." 
+                btnText="Search" 
+                altText="All images sourced from public domain/open license databases. Enjoy :)" 
+            />
             <PanelContainer 
                 unsplashImages={unsplashImages}
                 pexelsImages={pexelsImages}

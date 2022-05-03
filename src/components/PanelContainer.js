@@ -1,7 +1,7 @@
 import React from 'react';
 import Panel from './Panel'; 
 import { useState } from 'react'; 
-import Dropdown from 'react-bootstrap/Dropdown';
+import CustomDropDown from './CustomDropdown';
 
 const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages }) => {
     
@@ -99,20 +99,18 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages }) => {
          }
     }       
 
+    const options = ['Pexels', 'Unsplash', 'Pixabay'];
     return (
         <div>
-            <div>{itemsToRender}</div>
-            <Dropdown onSelect={onAddPanelDropdownClick}>
-                <Dropdown.Toggle variant="success" id="dropdown-basic" disabled={dropdownDisabled}>
-                    Add Panel
-                </Dropdown.Toggle>
-
-                <Dropdown.Menu>
-                    <Dropdown.Item eventKey="pexels">Pexels</Dropdown.Item>
-                    <Dropdown.Item eventKey="unsplash">Unsplash</Dropdown.Item>
-                    <Dropdown.Item eventKey="pixabay">Pixabay</Dropdown.Item>
-                </Dropdown.Menu>
-            </Dropdown>
+            <div style={{display: 'flex', overflowX: 'auto', margin: '5px'}}>
+                {itemsToRender}
+            </div>
+            <CustomDropDown 
+                onSelect={onAddPanelDropdownClick}
+                btnLabel='Add Panel' 
+                customOptions={options}
+                dropdownDisabled={dropdownDisabled}
+            />
         </div> 
     )
 }
