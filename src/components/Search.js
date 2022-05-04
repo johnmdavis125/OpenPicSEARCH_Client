@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios'; 
+import Header from './Header';
 import SearchBar from './SearchBar';
 import PanelContainer from './PanelContainer';
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;  
