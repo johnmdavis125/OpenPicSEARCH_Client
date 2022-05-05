@@ -1,6 +1,6 @@
 import React from 'react';
 import ImageCardQueue from './ImageCardQueue';
-import "./Panel.css";
+import "./QueuePanel.css";
 
 const QueuePanel = ({ selectedResults }) => { 
     let renderedImages = selectedResults.map((image) => {
@@ -10,12 +10,13 @@ const QueuePanel = ({ selectedResults }) => {
     })
     
     return (
-        <div className="panelMainDiv">
+        <div className="queuePanelMainDiv">
             <div className="upperDiv">
                 <h5 className="panelTitle" style={{paddingLeft: '15px'}}>QUEUE</h5>
             </div>
-            <div style={{display: 'flex'}}>
-                <div style={{flexBasis: '90%'}} className="imagesContainer">    {renderedImages}
+            <div style={{display: 'flex', justifyContent: 'center'}}>
+                <div className="queueImagesContainer">
+                    {renderedImages}
                 </div>        
             </div>
         </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import './ImageCard.css';
+import Card from 'react-bootstrap/Card';
+import './ImageCardQueue.css';
 
 const ImageCardQueue = ({ image }) => {
     
@@ -17,33 +18,75 @@ const ImageCardQueue = ({ image }) => {
    
            }) 
        },[]);
-
+    let imageTitle;
     if (image.hasOwnProperty('urls')){
+        console.log(image); 
+        imageTitle = image.description ? image.description : 'Untitled'; 
         return (
-            <div style={{gridRowEnd: `span ${spans}`}}>
-                <img
-                className='image'
-                ref={ref}
-                src={image.urls.regular} />
-            </div>
+            <Card style={{ gridRowEnd: `span ${spans}`, width: '800px'}} className='queueCard'>
+                <div style={{display: 'flex'}}>
+                <Card.Img 
+                    className="queueImage" 
+                    ref={ref}
+                    src={image.urls.regular} 
+                    variant="top" 
+                />
+                <Card.Body>
+                    <Card.Title>{imageTitle}</Card.Title>
+                    <Card.Text>
+                        <p>Image Source: Unsplash</p>
+                        <p>Photographer: {image.user.name}</p>
+                        <a href={image.user.links.portfolio}>Photographer Portfolio</a>
+                    </Card.Text>
+                </Card.Body>
+                </div>
+            </Card>
         )
     } else if (image.hasOwnProperty('src')){
+        console.log(image);
+        imageTitle = image.alt ? image.alt : 'Untitled';
         return (
-            <div style={{gridRowEnd: `span ${spans}`}}>
-                <img
-                className='image'
-                ref={ref}
-                src={image.src.medium} />
-            </div>
+            <Card style={{ gridRowEnd: `span ${spans}`, width: '800px'}} className='queueCard'>
+                <div style={{display: 'flex'}}>
+                <Card.Img 
+                    className="queueImage" 
+                    ref={ref}
+                    src={image.src.medium} 
+                    variant="top" 
+                />
+                <Card.Body>
+                    <Card.Title>{imageTitle}</Card.Title>
+                    <Card.Text>
+                        <p>Image Source: Pexels</p>
+                        <p>Photographer: {image.photographer}</p>
+                        <a href={image.photographer_url}>Photographer Portfolio</a> 
+                    </Card.Text>
+                </Card.Body>
+                </div>
+            </Card>
         ) 
     } else if (image.hasOwnProperty('webformatURL')){
+        console.log(image);
+        imageTitle = image.tags ? image.tags : 'Untitled';
         return (
-            <div style={{gridRowEnd: `span ${spans}`}}>
-                <img
-                className='image'
-                ref={ref}
-                src={image.webformatURL} />
-            </div>
+            <Card style={{ gridRowEnd: `span ${spans}`, width: '800px'}} className='queueCard'>
+                <div style={{display: 'flex'}}>
+                <Card.Img 
+                    className="queueImage" 
+                    ref={ref}
+                    src={image.webformatURL} 
+                    variant="top" 
+                />
+                <Card.Body>
+                    <Card.Title>{imageTitle}</Card.Title>
+                    <Card.Text>
+                        <p>Image Source: Pexels</p>
+                        <p>Photographer: {image.user}</p>
+                        <a href={image.userImageURL}>Photographer Portfolio</a>
+                    </Card.Text>
+                </Card.Body>
+                </div>
+            </Card>
         )
     }
 }
