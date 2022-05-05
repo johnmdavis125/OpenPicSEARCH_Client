@@ -30,7 +30,6 @@ const App = () => {
             console.log(`image is at index ${selectedResults.indexOf(image)}`);
             const indexOfDuplicate = selectedResults.indexOf(image); 
             
-            // run splice
             console.log('run splice'); 
             const left = selectedResults.slice(0,indexOfDuplicate); 
             console.log('print left'); 
