@@ -4,6 +4,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col'; 
 import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
+import Link from './Link';
 import "./Header.css"; 
 
 
@@ -19,16 +20,24 @@ const Header = () => {
                 <Row>
                     <Nav className="justify-content-end customNav">
                         <Nav.Item>
-                            <Nav.Link href="#" style={{color: "whitesmoke"}}>About</Nav.Link>
+                            <Nav.Link>
+                                <Link href="/about" className='customNavLink' >About</Link>
+                            </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href="#" style={{color: "whitesmoke"}}>Search</Nav.Link>
+                            <Nav.Link>
+                                <Link href="/" className='customNavLink' >Search</Link>
+                            </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href="#" style={{color: "whitesmoke"}}>Queue</Nav.Link>
+                            <Nav.Link>
+                                <Link href="/queue" className='customNavLink' >Queue</Link>
+                            </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
-                            <Nav.Link href="#" style={{color: "whitesmoke"}}>Collections</Nav.Link>
+                            <Nav.Link>
+                                <Link href="/collections" className='customNavLink' >Collections</Link>
+                            </Nav.Link>
                         </Nav.Item>
                     </Nav>
                 </Row>

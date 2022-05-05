@@ -1,9 +1,19 @@
-        {/* <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src={image.urls.small} />
-            <Card.Body>
-            <Card.Title>Card Title</Card.Title>
-            <Card.Text>
-                {image.description ? image.description : "No description provided"}
-            </Card.Text>
-            </Card.Body>
-        </Card> */}
+import React from 'react';
+import QueuePanel from './QueuePanel';
+
+const Queue = ({ selectedResults }) => {
+
+    console.log(`selectedResults.length in Queue: ${selectedResults.length}`);
+ 
+    for (let i = 0; i < selectedResults.length; i++){
+        console.log(selectedResults[i]); 
+    }
+
+    return (
+        <div>
+            <QueuePanel selectedResults={selectedResults} />
+        </div>
+    )
+}
+
+export default Queue; 
