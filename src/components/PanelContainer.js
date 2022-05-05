@@ -118,6 +118,7 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
     }       
 
     const options = ['Pexels', 'Unsplash', 'Pixabay'];
+    const eventKeys = ['pexels', 'unsplash', 'pixabay'];
     return (
         <div>
             <div style={{display: 'flex', overflowX: 'auto', margin: '5px'}}>
@@ -128,6 +129,7 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
                 btnLabel='Add Panel' 
                 customOptions={options}
                 dropdownDisabled={dropdownDisabled}
+                eventKeys={eventKeys}
             />
         </div> 
     )
