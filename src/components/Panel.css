@@ -42,8 +42,8 @@ button {
 }
 
 button:hover {
-    background-color: rgb(0, 170, 255);
-    color: black;
+    background-color: rgb(63, 71, 75);
+    color: rgb(255, 255, 255);
 }
 
 .prev {

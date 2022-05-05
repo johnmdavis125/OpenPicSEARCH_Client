@@ -16,8 +16,7 @@ const App = () => {
         console.log('updateQueue runs');
         console.log(`imageSelected: ${image.id}`); 
         
-        setSelectedResults([...selectedResults, image]); 
-        // console.log(`selectedResults.length: ${selectedResults.length}`)  
+        setSelectedResults([...selectedResults, image]);  
     
         checkForDuplicates(image); 
     }
@@ -49,23 +48,7 @@ const App = () => {
                 console.log(newArr[i].id); 
             } 
             
-            // setSelectedResults(selectedResults.splice(indexOfDuplicate, 1)); 
             setSelectedResults(newArr); 
-
-            // run map
-            // console.log('run map'); 
-            // let selectionsWithDuplicatesRemoved = selectedResults.map((result) => {
-            //     if (result && result !== image){
-            //         return (result);  
-            //     } else if (!result || result === image){
-            //         console.log(`result: ${result.id}`); 
-            //         console.log(`image: ${image.id}`); 
-            //         console.log(`result === image, do not include`); 
-            //     }
-            // }); // end map
-            
-
-            // setSelectedResults(selectionsWithDuplicatesRemoved); 
         } else {
             console.log(`selectedResults does not include ${image.id}`); 
             for (let i = 0; i < selectedResults.length; i++){
@@ -75,9 +58,13 @@ const App = () => {
     }
 
     console.log(`selectedResults.length in App comp: ${selectedResults.length}`);
-
     for (let i = 0; i < selectedResults.length; i++){
         console.log(selectedResults[i]); 
+    }
+
+    const deselectFromQueue = (image) => {
+        console.log('deselect from Queue run');
+        checkForDuplicates(image); 
     }
 
     return (
@@ -90,7 +77,10 @@ const App = () => {
             <About />
         </Route>
         <Route path="/queue">
-            <Queue selectedResults={selectedResults}/>
+            <Queue
+                selectedResults={selectedResults}
+                deselectFromQueue={deselectFromQueue}
+            />
         </Route>
         <Route path="/collections">
             <Collections />

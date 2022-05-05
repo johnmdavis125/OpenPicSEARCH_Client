@@ -1,10 +1,15 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import Card from 'react-bootstrap/Card';
+import CloseButton from 'react-bootstrap/CloseButton';
 import './ImageCardQueue.css';
 
-const ImageCardQueue = ({ image }) => {
-    
+const ImageCardQueue = ({ image, deselectFromQueue }) => {
+
+        const deselect = () => {
+            deselectFromQueue(image); 
+        }
+
        // Image Positioning
        const [spans, setSpans] = useState(0);
        const ref = useRef(); 
@@ -21,7 +26,7 @@ const ImageCardQueue = ({ image }) => {
     let imageTitle;
     if (image.hasOwnProperty('urls')){
         console.log(image); 
-        imageTitle = image.description ? image.description : 'Untitled'; 
+        imageTitle = image.description ? image.description : 'Untitled';         
         return (
             <Card style={{ gridRowEnd: `span ${spans}`, width: '800px'}} className='queueCard'>
                 <div style={{display: 'flex'}}>
@@ -32,7 +37,15 @@ const ImageCardQueue = ({ image }) => {
                     variant="top" 
                 />
                 <Card.Body>
-                    <Card.Title>{imageTitle}</Card.Title>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <Card.Title>{imageTitle}</Card.Title>
+                        <CloseButton 
+                            onClick={deselect}
+                            className="closeButton"
+                            style={{color: 'white', opacity: '0.5'}}
+                            variant="dark">
+                        </CloseButton>
+                    </div>
                     <Card.Text>
                         <p>Image Source: Unsplash</p>
                         <p>Photographer: {image.user.name}</p>
@@ -55,7 +68,15 @@ const ImageCardQueue = ({ image }) => {
                     variant="top" 
                 />
                 <Card.Body>
-                    <Card.Title>{imageTitle}</Card.Title>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <Card.Title>{imageTitle}</Card.Title>
+                        <CloseButton 
+                            onClick={deselect}
+                            className="closeButton"
+                            style={{color: 'white', opacity: '0.5'}}
+                            variant="dark">
+                        </CloseButton>
+                    </div> 
                     <Card.Text>
                         <p>Image Source: Pexels</p>
                         <p>Photographer: {image.photographer}</p>
@@ -78,7 +99,15 @@ const ImageCardQueue = ({ image }) => {
                     variant="top" 
                 />
                 <Card.Body>
-                    <Card.Title>{imageTitle}</Card.Title>
+                    <div style={{display: 'flex', justifyContent: 'space-between'}}>
+                        <Card.Title>{imageTitle}</Card.Title>
+                        <CloseButton 
+                            onClick={deselect}
+                            className="closeButton"
+                            style={{color: 'white', opacity: '0.5'}}
+                            variant="dark">
+                        </CloseButton>
+                    </div>
                     <Card.Text>
                         <p>Image Source: Pexels</p>
                         <p>Photographer: {image.user}</p>

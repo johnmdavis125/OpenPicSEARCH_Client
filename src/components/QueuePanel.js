@@ -2,10 +2,13 @@ import React from 'react';
 import ImageCardQueue from './ImageCardQueue';
 import "./QueuePanel.css";
 
-const QueuePanel = ({ selectedResults }) => { 
+const QueuePanel = ({ selectedResults, deselectFromQueue }) => { 
     let renderedImages = selectedResults.map((image) => {
         return (
-            <ImageCardQueue key={image.id} image={image} />
+            <ImageCardQueue key={image.id} 
+                image={image} 
+                deselectFromQueue={deselectFromQueue} 
+            />
         )
     })
     
