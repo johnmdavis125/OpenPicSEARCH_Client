@@ -1,25 +1,19 @@
 import React from 'react';
-import { useState } from 'react';
-import Card from 'react-bootstrap/Card';
-import Header from './Header'; 
+import QueuePanel from './QueuePanel';
 
-const Queue = () => {
+const Queue = ({ selectedResults }) => {
+
+    console.log(`selectedResults.length in Queue: ${selectedResults.length}`);
+ 
+    for (let i = 0; i < selectedResults.length; i++){
+        console.log(selectedResults[i]); 
+    }
+
     return (
         <div>
-            <h3>Queue</h3>
+            <QueuePanel selectedResults={selectedResults} />
         </div>
     )
 }
-
-
-{/* <Card style={{ width: '18rem' }}>
-    <Card.Img variant="top" src={image.urls.small} />
-    <Card.Body>
-    <Card.Title>Card Title</Card.Title>
-    <Card.Text>
-        {image.description ? image.description : "No description provided"}
-    </Card.Text>
-    </Card.Body>
-</Card> */}
 
 export default Queue; 

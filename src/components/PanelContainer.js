@@ -3,7 +3,7 @@ import Panel from './Panel';
 import { useState } from 'react'; 
 import CustomDropDown from './CustomDropdown';
 
-const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages }) => {
+const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQueue }) => {
     
     const [panels, setPanels] = useState({
         pexels: 1,
@@ -88,11 +88,29 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages }) => {
     for (let i = 0; i < arrKeys.length; i++){
          for (let j = 0; j < panels[arrKeys[i]]; j++){
             if (arrKeys[i] === 'unsplash'){
-                itemsToRender.push(<Panel images={unsplashImages} apiName='Unsplash' onDeleteClick={onDeleteClick} />);
+                itemsToRender.push(
+                    <Panel
+                        images={unsplashImages}
+                        apiName='Unsplash'
+                        onDeleteClick={onDeleteClick}
+                        updateQueue={updateQueue}
+                    />);
             } else if (arrKeys[i] === 'pexels'){
-                itemsToRender.push(<Panel images={pexelsImages} apiName='Pexels' onDeleteClick={onDeleteClick} />);
+                itemsToRender.push(
+                    <Panel
+                        images={pexelsImages}
+                        apiName='Pexels'
+                        onDeleteClick={onDeleteClick}
+                        updateQueue={updateQueue}
+                    />);
             } else if (arrKeys[i] === 'pixabay'){
-                itemsToRender.push(<Panel images={pixabayImages} apiName='Pixabay' onDeleteClick={onDeleteClick} />);
+                itemsToRender.push(
+                    <Panel
+                        images={pixabayImages} 
+                        apiName='Pixabay'
+                        onDeleteClick={onDeleteClick}
+                        updateQueue={updateQueue}
+                    />);
             } else {
                 console.log('illegitimate key, initiate debug'); 
             }

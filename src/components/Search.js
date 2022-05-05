@@ -1,14 +1,13 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios'; 
-import Header from './Header';
 import SearchBar from './SearchBar';
 import PanelContainer from './PanelContainer';
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;  
 const PEXELS_KEY = process.env.REACT_APP_PEXELS_API_KEY;   
 const PIXABAY_KEY = process.env.REACT_APP_PIXABAY_API_KEY;
 
-const Search = () => {
+const Search = ({ updateQueue }) => {
     const [unsplashImages, setUnsplashImages] = useState([]); 
     const [pexelsImages, setPexelsImages] = useState([]); 
     const [pixabayImages, setPixabayImages] = useState([]); 
@@ -81,6 +80,8 @@ const Search = () => {
                 unsplashImages={unsplashImages}
                 pexelsImages={pexelsImages}
                 pixabayImages={pixabayImages} 
+
+                updateQueue={updateQueue}
             />
         </div>
     )

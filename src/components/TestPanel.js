@@ -1,10 +1,10 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react'; 
-import ImageCard from './ImageCard';
+import TestPexelsCard from './TestPexelsCard';
 import CloseButton from 'react-bootstrap/CloseButton';
 import "./Panel.css";
 
-const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
+const TestPanel = ({images, apiName}) => {
     
     // Pagination
     const [currentPage, setCurrentPage] = useState(0);
@@ -34,25 +34,24 @@ const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
     if (currentPage === numPages - 1){rightButtonDisabled = true;}
     let leftButtonDisabled = false; 
     if (currentPage === 0){leftButtonDisabled = true;}
-    
-    // Pass filtered results into ImageCard
-    let renderedImages;
-    renderedImages = filteredArray.map((image) => {
-        return (
-            <ImageCard key={image.id} image={image} apiName={apiName} updateQueue={updateQueue} />
-        )
-    });
 
-    // Delete Button
-    const deleteClickHelper = () => {       
-        onDeleteClick(apiName); 
+    // Pass filtered results into ImageCards
+    let renderedImages;
+    if (apiName === 'Pexels'){
+        renderedImages = filteredArray.map((image) => {       
+            return (
+                <TestPexelsCard key={image.id} image={image} />
+            )
+        });        
+    } else {
+        console.log('invalid apiName');
     }
 
     return (
         <div className="panelMainDiv">
             <div className="upperDiv">
                 <h5 className="panelTitle" style={{paddingLeft: '15px'}}>{apiName}</h5>
-                <CloseButton onClick={deleteClickHelper} className="closeButton" style={{color: 'white', opacity: '0.5', paddingRight: '15px'}} variant='white'></CloseButton>
+                <CloseButton className="closeButton" style={{color: 'white', opacity: '0.5', paddingRight: '15px'}} variant='white'></CloseButton>
                 
             </div>
             <div style={{display: 'flex'}}>
@@ -75,4 +74,4 @@ const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
     )
 }
 
-export default Panel; 
+export default TestPanel; 
