@@ -13,19 +13,8 @@ const QueuePanel = ({ selectedResults, deselectFromQueue, createNewCollection, u
         )
     })
 
-    // Dropdown configuration
-    const options = ['Create New Collection', 'Add to Collection_Name1', 'Add to Collection_Name2'];
-    // options (and associated eventKeys) need to be configured dynamically -> per current number of collection in DB (need to 'get' current collections whenever user clicks on 'addSelectionsClick');  
-    const eventKeys = ['new', 'addToC1', 'addToC2']; 
-    const dropdownDisabled = false; 
-    const onAddSelectionsClick = (event) => {
-        console.log(`user selected: ${event}`);
-        const userSelection = event;
-        if (userSelection === 'new'){
-            createNewCollection(selectedResults);  
-        } else {
-            console.log('user selected option - add to existing collection - to be wired up later'); 
-        }
+    const onAddSelectionsClick = (input) => {
+        createNewCollection(selectedResults, input);   
     }
 
     // Shift the dropdown to the top of the panel (reuse searchBar component**)
@@ -52,12 +41,12 @@ const QueuePanel = ({ selectedResults, deselectFromQueue, createNewCollection, u
             </div>
             <div>
                 <InputBar 
-                    onSubmit={createNewCollection}
+                    onSubmit={onAddSelectionsClick}
                     label={null} 
                     placeholder="Enter Title of Your New Collection..." 
                     btn1Text="New Collection" 
                     btn2Text="Add to Existing Collection Instead" 
-                    altText="All images on this page will be added!"
+                    altText="Add all images in your queue to a new or existing collection!"
                     dropDownConfig={dropDownConfig} 
                 />
             </div>

@@ -53,18 +53,12 @@ const App = () => {
         }
     }
 
-    console.log(`selectedResults.length in App comp: ${selectedResults.length}`);
-    for (let i = 0; i < selectedResults.length; i++){
-        console.log(selectedResults[i]); 
-    }
-
     const deselectFromQueue = (image) => {
-        console.log('deselect from Queue run');
         checkForDuplicates(image); 
     }
 
-    const postCollection = (imgArrayForNewCollection) => {
-          axios.post('http://localhost:3001/api/collections', imgArrayForNewCollection)
+    const postCollection = (formattedInput) => {
+          axios.post('http://localhost:3001/api/collections', formattedInput)
           .then(function (response) {
               console.log(response);
           })
@@ -73,14 +67,50 @@ const App = () => {
           });
       }; 
 
-    const createNewCollection = (imgArrayForNewCollection) => {
+    const createNewCollection = (unformattedImgArrForNewCol, colTitle) => {
         console.log('createNewCollection');
-        console.log(imgArrayForNewCollection); 
+        console.log(`unformattedArr: ${unformattedImgArrForNewCol}`);
+        console.log(`colTitle: ${colTitle}`);  
         
-        // massage data on this line to follow model schema & pass to postCollection
-            // need to fix model schema as well?
+        let formattedImgArr = unformattedImgArrForNewCol.map((image) => {
+            if (image.hasOwnProperty('urls')){
+                return ({
+                    imgSrc: image.urls.regular,
+                    description: image.description,
+                    photographer: image.user.name,
+                    portfolioURL: image.user.links.portfolio,
+                    apiName: 'Unsplash',
+                    apiID: image.id
+                });
+            } else if (image.hasOwnProperty('src')){
+                return ({
+                    imgSrc: image.src.medium, 
+                    description: image.alt,
+                    photographer: image.photographer,
+                    portfolioURL: image.photographer.url,
+                    apiName: 'Pexels',
+                    apiID: image.id
+                });
+            } else if (image.hasOwnProperty('webformatURL')){
+                return ({
+                    imgSrc: image.webformatURL, 
+                    description: image.tags,
+                    photographer: image.user,
+                    portfolioURL: image.userImageURL,
+                    apiName: 'Pixabay',
+                    apiID: image.id
+                });
+            } else {
+                console.log('invalid image src'); 
+            }
+        })
 
-        postCollection(imgArrayForNewCollection); 
+        const formattedInput = {
+            title: colTitle,
+            images: formattedImgArr
+        }
+
+        postCollection(formattedInput); 
     }
 
     const updateCollection = () => {
@@ -90,7 +120,7 @@ const App = () => {
     return (
     <div className="app">
         <Header />
-        <Route path="/search">
+        <Route path="/">
             <Search updateQueue={updateQueue}/>
         </Route>
         <Route path="/about">

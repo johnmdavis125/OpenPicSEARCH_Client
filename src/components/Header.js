@@ -26,7 +26,7 @@ const Header = () => {
                         </Nav.Item>
                         <Nav.Item>
                             <Nav.Link>
-                                <Link href="/search" className='customNavLink' >Search</Link>
+                                <Link href="/" className='customNavLink' >Search</Link>
                             </Nav.Link>
                         </Nav.Item>
                         <Nav.Item>
