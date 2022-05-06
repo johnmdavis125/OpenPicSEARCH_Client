@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import axios from 'axios'; 
-import SearchBar from './SearchBar';
+import InputBar from './InputBar';
 import PanelContainer from './PanelContainer';
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;  
 const PEXELS_KEY = process.env.REACT_APP_PEXELS_API_KEY;   
@@ -68,20 +68,33 @@ const Search = ({ updateQueue }) => {
         searchPixabay(searchTerm);
     }
 
+    const runBrowserSearch = () => {
+        console.log('run browser search'); 
+    }
+
+    const dropDownConfig = {
+        onSelect: runBrowserSearch,
+        btnLabel: 'Search in Browser',
+        customOptions: ['Search site', 'Search site2', 'Search site3', 'Search All'],
+        dropDownDisabled: false,
+        eventKeys: ['site1', 'site2', 'site3', 'all']
+    }
+
     return (
         <div>
-            <SearchBar 
+            <InputBar 
                 onSubmit={runAPISearch}
                 label={null} 
                 placeholder="Enter Search Term..." 
-                btnText="Search" 
-                altText="All images sourced from public domain/open license databases. Enjoy :)" 
+                btn1Text="Search" 
+                btn2Text="Search in Browser" 
+                altText="All images sourced from public domain/open license databases. Enjoy :)"
+                dropDownConfig={dropDownConfig} 
             />
             <PanelContainer 
                 unsplashImages={unsplashImages}
                 pexelsImages={pexelsImages}
                 pixabayImages={pixabayImages} 
-
                 updateQueue={updateQueue}
             />
         </div>

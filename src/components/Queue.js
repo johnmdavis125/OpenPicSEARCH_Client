@@ -1,7 +1,7 @@
 import React from 'react';
 import QueuePanel from './QueuePanel';
 
-const Queue = ({ selectedResults, deselectFromQueue }) => {
+const Queue = ({ selectedResults, deselectFromQueue, createNewCollection, updateCollection }) => {
 
     console.log(`selectedResults.length in Queue: ${selectedResults.length}`);
  
@@ -13,7 +13,10 @@ const Queue = ({ selectedResults, deselectFromQueue }) => {
         <div>
             <QueuePanel
                 selectedResults={selectedResults}
-                deselectFromQueue={deselectFromQueue} />
+                deselectFromQueue={deselectFromQueue}
+                createNewCollection={createNewCollection}
+                updateCollection={updateCollection}
+                />
         </div>
     )
 }

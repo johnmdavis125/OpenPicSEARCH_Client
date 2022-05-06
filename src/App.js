@@ -1,5 +1,6 @@
 import React from 'react'; 
 import { useState } from 'react';
+import axios from 'axios'; 
 import Route from './components/Route';
 import Header from './components/Header'; 
 import Search from './components/Search';
@@ -12,12 +13,8 @@ const App = () => {
     
     const [selectedResults, setSelectedResults] = useState([]); 
 
-    const updateQueue = (image) => {
-        console.log('updateQueue runs');
-        console.log(`imageSelected: ${image.id}`); 
-        
-        setSelectedResults([...selectedResults, image]);  
-    
+    const updateQueue = (image) => { 
+        setSelectedResults([...selectedResults, image]); 
         checkForDuplicates(image); 
     }
 
@@ -66,6 +63,30 @@ const App = () => {
         checkForDuplicates(image); 
     }
 
+    const postCollection = (imgArrayForNewCollection) => {
+          axios.post('http://localhost:3001/api/collections', imgArrayForNewCollection)
+          .then(function (response) {
+              console.log(response);
+          })
+          .catch(function (error) {
+              console.log(error);
+          });
+      }; 
+
+    const createNewCollection = (imgArrayForNewCollection) => {
+        console.log('createNewCollection');
+        console.log(imgArrayForNewCollection); 
+        
+        // massage data on this line to follow model schema & pass to postCollection
+            // need to fix model schema as well?
+
+        postCollection(imgArrayForNewCollection); 
+    }
+
+    const updateCollection = () => {
+        console.log('updateCollection'); 
+    }
+
     return (
     <div className="app">
         <Header />
@@ -79,6 +100,8 @@ const App = () => {
             <Queue
                 selectedResults={selectedResults}
                 deselectFromQueue={deselectFromQueue}
+                createNewCollection={createNewCollection} 
+                updateCollection={updateCollection}
             />
         </Route>
         <Route path="/collections">

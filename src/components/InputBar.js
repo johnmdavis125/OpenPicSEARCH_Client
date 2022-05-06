@@ -2,8 +2,9 @@ import React from 'react';
 import { useState } from 'react'; 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
+import CustomDropDown from './CustomDropdown';
 
-const SearchBar = ({onSubmit, label, placeholder, btnText, altText}) => {
+const InputBar = ({onSubmit, label, placeholder, btn1Text, btn2Text, altText, dropDownConfig }) => {
   
     const [term, setTerm] = useState(''); 
   
@@ -26,12 +27,16 @@ const SearchBar = ({onSubmit, label, placeholder, btnText, altText}) => {
                         value={term}
                         onChange={(e) => setTerm(e.target.value)}
                         />
-                    <Button variant="success" type="submit">
-                        {btnText}
+                    <Button variant="success" type="submit" style={{minWidth: '150px'}}>
+                        {btn1Text}
                     </Button>
-                    <Button variant="secondary" type="submit" style={{minWidth: "160px"}}>
-                        Search in Browser
-                    </Button>
+                    <CustomDropDown 
+                        onSelect={dropDownConfig.onSelect}
+                        btnLabel={btn2Text} 
+                        customOptions={dropDownConfig.customOptions}
+                        dropdownDisabled={dropDownConfig.dropdownDisabled}
+                        eventKeys={dropDownConfig.eventKeys}
+                    />
                 </div>
                     <Form.Text className="text-muted" style={{marginLeft: "5px"}}>
                     {altText}
@@ -42,4 +47,4 @@ const SearchBar = ({onSubmit, label, placeholder, btnText, altText}) => {
     )
 }
 
-export default SearchBar; 
+export default InputBar; 

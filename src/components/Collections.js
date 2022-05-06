@@ -17,20 +17,42 @@ const Collections = () => {
           console.error(error);
         }
       }
+
+      async function getCollection(collectionID) {
+        try {
+          const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
+          console.log(response);
+          console.log(response.data);
+          setData(response.data); 
+        } catch (error) {
+          console.error(error);
+        }
+      }
     
-    const renderedItems = data.map((item) => {
+      // item.imgURL is not valid here...item is an array
+      // double check that item._id is a unique value here
+    const renderedCollections = data.map((item) => {
         return (
-            <p key={item.imgURL}>{item.imgURL}</p>
+            <p key={item._id}>{item.imgURL}</p>
         );
     });
 
-    return (
-        <div>
-            <h3>Collections</h3>
-            <Button onClick={getCollections} variant="primary">API Query</Button>
+    // Logic -> Index => 'get' number of collections (hard coded for now) and their titles -> labels on the buttons
+        // getCollections    
+    // clickButton -> another 'get' of that specific collection -> display in panel
 
+    return (
+        <div style={{display: 'flex', flexDirection: 'column'}}>
+            <h3>Collections</h3>
             <div>
-                {renderedItems}
+                <Button onClick={getCollections} variant="primary">INDEX_ShowAllCollections</Button>
+                <Button onClick={() => getCollection('collection1_id')} variant="primary">See Collection 1</Button>
+                <Button onClick={() => getCollection('collection2_id')} variant="primary">See Collection 2</Button>
+                <Button onClick={() => getCollection('collection3_id')} variant="primary">See Collection 3</Button>
+            </div>
+            <div className='collectionPanel_should_be_this_div_instead_of_plain_div***'>
+                {renderedCollections} 
+                {/* this panel will show one collection at a time, not multiple as currently indicated */}
             </div>
         </div>
     )

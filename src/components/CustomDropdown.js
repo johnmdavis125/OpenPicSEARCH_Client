@@ -3,8 +3,8 @@ import Dropdown from 'react-bootstrap/Dropdown';
 
 const CustomDropDown = ({onSelect, btnLabel, customOptions, dropdownDisabled, eventKeys }) => {
     return (
-        <Dropdown onSelect={onSelect} style={{paddingLeft: '50vw'}}>
-            <Dropdown.Toggle variant="success" id="dropdown-basic" disabled={dropdownDisabled} style={{minWidth: '200px'}}>
+        <Dropdown onSelect={onSelect}>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic" disabled={dropdownDisabled} style={{minWidth: '200px'}}>
                 {btnLabel}
             </Dropdown.Toggle>
             <Dropdown.Menu>
