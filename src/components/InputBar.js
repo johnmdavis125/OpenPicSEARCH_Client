@@ -1,17 +1,25 @@
 import React from 'react';
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CustomDropDown from './CustomDropdown';
 
-const InputBar = ({onSubmit, label, placeholder, btn1Text, btn2Text, altText, dropDownConfig }) => {
+const InputBar = ({onSubmit, label, placeholder, btn1Text, btn2Text, altText, dropDownConfig, listCollections }) => {
   
     const [term, setTerm] = useState(''); 
-  
+    const [refreshInputBarState, setRefreshInputBarState] = useState(0); 
     const onFormSubmit = (event) => {
         event.preventDefault(); 
         onSubmit(term); 
+        setRefreshInputBarState(refreshInputBarState + 1); 
     }
+
+    useEffect(() => {
+        const refreshInputBar = () => {
+            console.log('inputBar refresh on load'); 
+        }
+        refreshInputBar(); 
+    },[refreshInputBarState]);
 
     return (
         <div>
@@ -35,7 +43,7 @@ const InputBar = ({onSubmit, label, placeholder, btn1Text, btn2Text, altText, dr
                         btnLabel={btn2Text} 
                         customOptions={dropDownConfig.customOptions}
                         dropdownDisabled={dropDownConfig.dropdownDisabled}
-                        eventKeys={dropDownConfig.eventKeys}
+                        eventKeys={dropDownConfig.customOptions}
                     />
                 </div>
                     <Form.Text className="text-muted" style={{marginLeft: "5px"}}>

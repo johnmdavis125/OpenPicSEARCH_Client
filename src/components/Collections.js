@@ -1,47 +1,37 @@
 import React from 'react'; 
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import axios from 'axios'; 
 import Button from 'react-bootstrap/Button';
 import CollectionsPanel from './CollectionsPanel'; 
 
-const Collections = () => {
+const Collections = ({ setLabelsForUpdateBtn, listCollections, setListCollections, getCollection, collection, setCollection, deleteCollection}) => {
     
-    // const [data, setData] = useState([]); 
-    const [listCollections, setListCollections] = useState([]); 
-    const [collection, setCollection] = useState({}); 
-    
+    console.log('render collections component');    
 
-    async function getCollections() {
-        try {
-          const response = await axios.get('http://localhost:3001/api/collections');
-          console.log(response);
-          console.log(response.data);
-          setListCollections(response.data); 
+    useEffect(() => {
+        async function updateCollections() {
+            try {
+            const response = await axios.get('http://localhost:3001/api/collections');
+            console.log(response);
+            console.log(response.data);
+            setListCollections(response.data); 
         } catch (error) {
-          console.error(error);
+            console.error(error);
         }
-      }
-
-      async function getCollection(collectionID) {
-        try {
-          const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
-          console.log(response);
-          console.log(response.data);
-          setCollection(response.data); 
-        } catch (error) {
-          console.error(error);
-        }
-      }
+    }
+    updateCollections(); 
+    },[]);  
     
+    // Prep To Render
     const renderedCollectionsList = listCollections.map((col) => {
         return (
             <Button 
                 key={col._id}
+                className='listBtn'
                 onClick={() => getCollection(col._id)}
             >{col.title}</Button>
         );
     });
-
     let renderedImages; 
     Object.keys(collection).length > 0 ? 
     renderedImages = collection.images.map((image) => {
@@ -50,20 +40,9 @@ const Collections = () => {
         )}) 
     : renderedImages = []; 
 
-    // Logic -> Index => 'get' number of collections (hard coded for now) and their titles -> labels on the buttons
-        // getCollections    
-    // clickButton -> another 'get' of that specific collection -> display in panel
     return (
         <div className='collectionsMain'>
-            <div className='collectionsInner'>
-                <div>
-                    <Button onClick={getCollections} variant="primary">INDEX_ShowAllCollections</Button>
-                </div>
-                <div>
-                    {renderedCollectionsList}
-                </div>
-            </div>
-            <CollectionsPanel collectionImages={collection} /> 
+            <CollectionsPanel collection={collection} setCollection={setCollection} renderedCollectionsList={renderedCollectionsList} deleteCollection={deleteCollection} /> 
         </div>
     )
 }

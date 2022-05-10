@@ -15,6 +15,7 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
     let numPexelsPanels = panels.pexels; 
     let numUnsplashPanels = panels.unsplash;
     let numPixabayPanels = panels.pixabay;  
+    
     // Delete Panels Button(s)
     const onDeleteClick = (clickedPanel) => {
         console.log(`delete button clicked on panel: ${clickedPanel}`); 

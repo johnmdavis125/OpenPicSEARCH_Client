@@ -1,16 +1,26 @@
 import React from 'react'; 
 import Dropdown from 'react-bootstrap/Dropdown';
 
-const CustomDropDown = ({onSelect, btnLabel, customOptions, dropdownDisabled, eventKeys }) => {
+const CustomDropDown = ({onSelect, btnLabel, customOptions, dropdownDisabled }) => {
+    
+    let dropDownItems = [];
+    for (let i = 0; i < customOptions.length; i++){
+        dropDownItems.push(
+            <Dropdown.Item eventKey={customOptions[i]}>{customOptions[i]}</Dropdown.Item>
+        )
+    }
+    
+    const onFormSubmit = (event) => {
+        onSelect(event);
+    }
+
     return (
-        <Dropdown onSelect={onSelect}>
+        <Dropdown onSelect={onFormSubmit}>
             <Dropdown.Toggle variant="secondary" id="dropdown-basic" disabled={dropdownDisabled} style={{minWidth: '200px'}}>
                 {btnLabel}
             </Dropdown.Toggle>
             <Dropdown.Menu>
-                <Dropdown.Item eventKey={eventKeys[0]}>{customOptions[0]}</Dropdown.Item>
-                <Dropdown.Item eventKey={eventKeys[1]}>{customOptions[1]}</Dropdown.Item>
-                <Dropdown.Item eventKey={eventKeys[2]}>{customOptions[2]}</Dropdown.Item>
+                {dropDownItems}
             </Dropdown.Menu>
         </Dropdown>
     )

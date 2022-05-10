@@ -6,6 +6,10 @@
     flex-basis: 90%;
 }
 
+.collectionsPanelMainInner {
+    display: flex;
+}
+
 .collectionsPanelImagesContainer {
     display: flex;
     flex-wrap: wrap;
@@ -20,4 +24,15 @@
 
 .collectionsInner {
     display: flex; 
+}
+
+.listSidePanel {
+    display: flex;
+    flex-direction: column;
+    margin: 5px; 
+}
+
+.listBtn {
+    margin: 1px; 
+    overflow: scroll;
 }

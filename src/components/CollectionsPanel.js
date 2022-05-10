@@ -1,31 +1,49 @@
 import React from 'react';
+import { useRef } from 'react'; 
 import Card from 'react-bootstrap/Card'; 
+import CloseButton from 'react-bootstrap/CloseButton';
 import './CollectionsPanel.css'; 
 
-const CollectionsPanel = ({ collectionImages }) => {
+const CollectionsPanel = ({ collection, setCollection, renderedCollectionsList, deleteCollection }) => {
     let renderedImages; 
-    Object.keys(collectionImages).length > 0 ? 
-    renderedImages = collectionImages.images.map((image) => {
+    Object.keys(collection).length > 0 ? 
+    renderedImages = collection.images.map((image) => {
         return (
             <Card key={image.id} style={{ width: '18rem' }}>
                 <Card.Img variant="top" src={image.imgSrc} />
-                {/* <Card.Body>
-                    <Card.Title>{image.description}</Card.Title>
-                    <Card.Text>
-                    Photographer: {image.photographer}
-                    </Card.Text>
-                </Card.Body> */}
+
             </Card>
         )
     }) : renderedImages = []; 
-    
+
+    const deleteMe = () => {
+        console.log('run delete me function'); 
+        console.log(collection._id); 
+        console.log(collection.title); 
+
+        deleteCollection(collection._id); 
+        console.log(renderedCollectionsList); 
+    }
+
     return (
         <div className="collectionsPanelMainDiv">
             <div className="upperDiv">
                 <h4 className="panelTitle">Collections Panel</h4>
             </div>
+            
+            <div className='collectionsPanelMainInner'>
+                <div className='listSidePanel'>
+                    {renderedCollectionsList}
+                </div>
                 <div className="collectionsPanelImagesContainer">
-                    {renderedImages}       
+                        {renderedImages}       
+                </div>
+                <CloseButton 
+                    onClick={deleteMe}
+                    className="closeButton"
+                    style={{color: 'white', opacity: '0.5'}}
+                    variant="dark">
+                </CloseButton>
             </div>
         </div>
     )

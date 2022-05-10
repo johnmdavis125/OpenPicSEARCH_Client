@@ -1,4 +1,4 @@
-import React from 'react'; 
+import React, { useEffect } from 'react'; 
 import { useState } from 'react';
 import axios from 'axios'; 
 import Route from './components/Route';
@@ -11,6 +11,8 @@ import './App.css';
 
 const App = () => {
     
+    console.log('render app component');  
+
     const [selectedResults, setSelectedResults] = useState([]); 
 
     const updateQueue = (image) => { 
@@ -65,9 +67,25 @@ const App = () => {
           .catch(function (error) {
               console.log(error);
           });
+          setSelectedResults([]);
       }; 
 
+      const putCollection = async (formattedInput, colIDToUpdate) => {
+        console.log('execute putCollection************'); 
+        console.log(`formattedInput: ${formattedInput}`); 
+        console.log(`colIDToUpdate: ${colIDToUpdate}`); 
+        await axios.put(`http://localhost:3001/api/collections/${colIDToUpdate}`, formattedInput)
+        .then(function (response) {
+            console.log(response);
+        })
+        .catch(function (error) {
+            console.log(error);
+        });
+        setSelectedResults([]);
+        }; 
+
     const createNewCollection = (unformattedImgArrForNewCol, colTitle) => {
+        
         console.log('createNewCollection');
         console.log(`unformattedArr: ${unformattedImgArrForNewCol}`);
         console.log(`colTitle: ${colTitle}`);  
@@ -109,12 +127,160 @@ const App = () => {
             title: colTitle,
             images: formattedImgArr
         }
-
+       
         postCollection(formattedInput); 
     }
 
-    const updateCollection = () => {
+    const [listCollections, setListCollections] = useState([]); 
+    const [collection, setCollection] = useState({}); 
+   
+    const combineInputsForPut = (imgArrParam, colTitleParam, colIDParam) => {
+            console.log('execute combineInputsForPut inside the useEffect'); 
+            console.log(`collection.title: ${collection.title}`);
+            console.log(`collection.images: ${collection.images}`);
+            console.log(`collection keys: ${Object.keys(collection)}`);
+            console.log(`imgArrParam: ${imgArrParam}`);
+            let formattedInputImagesToAdd; 
+            if (collection.title && imgArrParam){
+                formattedInputImagesToAdd = [...collection.images, ...imgArrParam]; 
+                console.log(`formattedInputImagesToAdd: ${formattedInputImagesToAdd}`); 
+                    const formattedInput = {
+                        title: colTitleParam,
+                        images: formattedInputImagesToAdd
+                    }
+                    console.log(`formattedInput: ${Object.keys(formattedInput)}`); 
+                    console.log(`formattedInput: ${formattedInput.title}`); 
+                    console.log(`formattedInput: ${formattedInput.images}`); 
+                    
+                    for (let i = 0; i < formattedInput.images.length; i++){
+                        console.log(formattedInput.images[i]); 
+                    }
+                    console.log(`colIDParam: ${colIDParam}`); 
+                
+                    putCollection(formattedInput, colIDParam);         
+            } else {
+                console.log('collection or globalFormattedImgArr not yet truthy');
+            }
+    }        
+    
+    const updateExistingCollection = (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
+        console.log('start updateExistingCollection execute'); 
+        console.log(`update the ${colToUpdateTitle} collection - id: ${colIDToUpdate}`); 
+        console.log(unformattedImgArrForUpdatingCol);
+
+        let formattedImgArr = selectedResults.map((image) => {
+            if (image.hasOwnProperty('urls')){
+                return ({
+                    imgSrc: image.urls.regular,
+                    description: image.description,
+                    photographer: image.user.name,
+                    portfolioURL: image.user.links.portfolio,
+                    apiName: 'Unsplash',
+                    apiID: image.id
+                });
+            } else if (image.hasOwnProperty('src')){
+                return ({
+                    imgSrc: image.src.medium, 
+                    description: image.alt,
+                    photographer: image.photographer,
+                    portfolioURL: image.photographer.url,
+                    apiName: 'Pexels',
+                    apiID: image.id
+                });
+            } else if (image.hasOwnProperty('webformatURL')){
+                return ({
+                    imgSrc: image.webformatURL, 
+                    description: image.tags,
+                    photographer: image.user,
+                    portfolioURL: image.userImageURL,
+                    apiName: 'Pixabay',
+                    apiID: image.id
+                });
+            } else {
+                console.log('invalid image src'); 
+            }
+        })
+
+        console.log(formattedImgArr); 
+        combineInputsForPut(formattedImgArr, colToUpdateTitle, colIDToUpdate); 
+    }      
+    
+    let useThisTargetIDTOCallUpdateExistingCollection; 
+    let useThisTargetTitleTOCallUpdateExistingCollection; 
+    const updateCollection = (event) => {
+        const colToUpdateTitle = event; 
         console.log('updateCollection'); 
+        console.log(colToUpdateTitle); 
+
+        console.log(`selectedResults: ${selectedResults}`); 
+    
+        let targetID;
+        // rename -> not an arrayContainingTargetIDs...
+        const arrContainingTargetIDs = listCollections.map((col) => {
+            if (col.title === colToUpdateTitle){
+              targetID = col._id;   
+            }
+            console.log(`targetID: ${targetID}`);
+            return targetID; 
+        });
+        console.log(`arrContainingTargetIDs: ${arrContainingTargetIDs}`); 
+    
+        for (let i = 0; i < listCollections.length; i++){
+            if (listCollections[i]._id === targetID){
+                let targetIndex = i; 
+                console.log(`listCollections[targetIndex].title: ${listCollections[targetIndex].title}`);   
+                console.log(`listCollections[targetIndex]._id: ${listCollections[targetIndex]._id}`);   
+            }
+        }
+        console.log(`targetID: ${targetID}`); 
+        useThisTargetIDTOCallUpdateExistingCollection = targetID; 
+        console.log(`useThisTargetIDTO: ${useThisTargetIDTOCallUpdateExistingCollection}`); 
+         
+        console.log(`colToUpdateTitle: ${colToUpdateTitle}`); 
+        useThisTargetTitleTOCallUpdateExistingCollection = colToUpdateTitle;
+        console.log(`useThisTargetTitleTO: ${useThisTargetTitleTOCallUpdateExistingCollection}`); 
+
+        console.log(`*******selectedResults: ${selectedResults}`); 
+
+        getCollection(targetID); 
+    }
+
+
+    useEffect(() => {
+        const triggerUpdate = () => {
+            console.log('on first run of this useEffect, collection should be undefined'); 
+            console.log(`collection.title: ${collection.title}`)
+            console.log(`selectedResults: ${selectedResults}`); 
+            if (collection.title){
+                console.log(selectedResults); 
+                updateExistingCollection(selectedResults, collection._id, collection.title); 
+            } else {
+                console.log('collection not yet truthy, cannot proceed to updateExistingCollection'); 
+            }
+        }
+        triggerUpdate(); 
+    }, [collection]); 
+
+    async function getCollection(collectionID) {
+        try {
+        console.log('run getCollection(colIDToUpdate)'); 
+        const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
+        console.log(`response: ${response}`);
+        console.log(`response.data: ${response.data}`);
+        setCollection(response.data); 
+        } catch (error) {
+        console.error(error);
+        }
+    }
+
+    const deleteCollection = async (collectionID) => {
+        try {
+            console.log('deleteCollection execute'); 
+            const response = await axios.delete(`http://localhost:3001/api/collections/${collectionID}`); 
+            console.log(response); 
+        } catch (error) {
+            console.error(error); 
+        }
     }
 
     return (
@@ -132,10 +298,20 @@ const App = () => {
                 deselectFromQueue={deselectFromQueue}
                 createNewCollection={createNewCollection} 
                 updateCollection={updateCollection}
+                setListCollections={setListCollections}
+                listCollections={listCollections}
             />
         </Route>
         <Route path="/collections">
-            <Collections />
+            <Collections 
+                listCollections={listCollections}
+                setListCollections={setListCollections}
+                getCollection={getCollection}
+                collection={collection}
+                setCollection={setCollection}
+                deleteCollection={deleteCollection}
+              
+            />
         </Route>
     </div>
     )

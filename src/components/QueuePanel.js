@@ -1,9 +1,47 @@
 import React from 'react';
+import { useState, useEffect } from 'react'; 
+import axios from 'axios'; 
 import ImageCardQueue from './ImageCardQueue';
 import InputBar from './InputBar';
 import "./QueuePanel.css";
 
-const QueuePanel = ({ selectedResults, deselectFromQueue, createNewCollection, updateCollection }) => { 
+const QueuePanel = ({ selectedResults, deselectFromQueue, createNewCollection, updateCollection, listCollections, setListCollections }) => { 
+    
+const [refreshQueuePanel, setRefreshQueuePanel] = useState(0); 
+
+    useEffect(() => {
+        async function getCollections() {
+            try {
+            const response = await axios.get('http://localhost:3001/api/collections');
+            console.log(response);
+            console.log(response.data);
+            setListCollections(response.data); 
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    getCollections(); 
+    },[]);
+
+    const [labelsForUpdateBtn, setLabelsForUpdateBtn] = useState([]); 
+    useEffect(() => {
+        const updateLabels = () => {
+            if (listCollections.length > 0){
+                setLabelsForUpdateBtn(listCollections);  
+            }
+        }
+        updateLabels(); 
+    }, [listCollections]);  
+    
+    let updateBtnOptions = [];  
+    console.log(labelsForUpdateBtn.length); 
+    const updateTheDamnLabels = () => {
+        for (let i = 0; i < labelsForUpdateBtn.length; i++){
+            updateBtnOptions.push(labelsForUpdateBtn[i].title); 
+        }
+    }
+    updateTheDamnLabels(); 
+
     let renderedImages = selectedResults.map((image) => {
         return (
             <ImageCardQueue key={image.id} 
@@ -14,19 +52,19 @@ const QueuePanel = ({ selectedResults, deselectFromQueue, createNewCollection, u
     })
 
     const onAddSelectionsClick = (input) => {
-        createNewCollection(selectedResults, input);   
+        createNewCollection(selectedResults, input);
+        setRefreshQueuePanel(refreshQueuePanel + 1); 
+        updateTheDamnLabels(); 
     }
 
-    // Shift the dropdown to the top of the panel (reuse searchBar component**)
-    // Add input for name of new Collection to be created - with button
-    // Dropdown will present all of the existing collections as options (update route) // next to button**, similar to search bar
+    
 
     const dropDownConfig = {
         onSelect: updateCollection,
         btnLabel: 'Add to Existing Collection',
-        customOptions: ['Collection1', 'Collection2', 'Collection3'],
+        customOptions: updateBtnOptions,
         dropDownDisabled: false,
-        eventKeys: ['collection1', 'collection2', 'collection3']
+        eventKeys: updateBtnOptions
     }
 
     return (
@@ -47,7 +85,8 @@ const QueuePanel = ({ selectedResults, deselectFromQueue, createNewCollection, u
                     btn1Text="New Collection" 
                     btn2Text="Add to Existing Collection Instead" 
                     altText="Add all images in your queue to a new or existing collection!"
-                    dropDownConfig={dropDownConfig} 
+                    dropDownConfig={dropDownConfig}
+                    listCollections={listCollections} 
                 />
             </div>
         </div>
