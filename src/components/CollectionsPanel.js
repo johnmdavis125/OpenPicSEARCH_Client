@@ -1,20 +1,63 @@
 import React from 'react';
-import { useRef } from 'react'; 
+import axios from 'axios'; 
+import { useState, useEffect, useRef } from 'react'; 
 import Card from 'react-bootstrap/Card'; 
+import Button from 'react-bootstrap/Button'; 
 import CloseButton from 'react-bootstrap/CloseButton';
 import './CollectionsPanel.css'; 
 
-const CollectionsPanel = ({ collection, setCollection, renderedCollectionsList, deleteCollection }) => {
-    let renderedImages; 
-    Object.keys(collection).length > 0 ? 
-    renderedImages = collection.images.map((image) => {
-        return (
-            <Card key={image.id} style={{ width: '18rem' }}>
-                <Card.Img variant="top" src={image.imgSrc} />
+const CollectionsPanel = ({ collection, setCollection, deleteCollection, listCollections, setListCollections, getCollection }) => {
+    
+    const [refresh, setRefresh] = useState(false); 
 
-            </Card>
-        )
-    }) : renderedImages = []; 
+    useEffect(() => {
+        async function updateCollections() {
+            try {
+            const response = await axios.get('http://localhost:3001/api/collections');
+            console.log(response);
+            console.log(response.data);
+            setListCollections(response.data); 
+        } catch (error) {
+            console.error(error);
+        }
+    }
+    updateCollections(); 
+    },[refresh]);  
+    
+    // const renderedCollectionsList = listCollections.map((col) => {
+    //     return (
+    //         <Button 
+    //             key={col._id}
+    //             className='listBtn'
+    //             onClick={() => getCollection(col._id)}
+    //         >{col.title}</Button>
+    //         );
+    //     });
+
+    let renderedCollectionsList;
+    const getRenderedCollectionsList = () => {
+        renderedCollectionsList = listCollections.map((col) => {
+            return (
+                <Button 
+                    key={col._id}
+                    className='listBtn'
+                    onClick={() => getCollection(col._id)}
+                >{col.title}</Button>
+                );
+            });
+    }
+    getRenderedCollectionsList(); 
+
+        let renderedImages; 
+        Object.keys(collection).length > 0 ? 
+        renderedImages = collection.images.map((image) => {
+            return (
+                <Card key={image.id} style={{ width: '18rem' }}>
+                    <Card.Img variant="top" src={image.imgSrc} />
+    
+                </Card>
+            )
+        }) : renderedImages = []; 
 
     const deleteMe = () => {
         console.log('run delete me function'); 
@@ -23,6 +66,16 @@ const CollectionsPanel = ({ collection, setCollection, renderedCollectionsList, 
 
         deleteCollection(collection._id); 
         console.log(renderedCollectionsList); 
+        delayedFunction(); 
+    }
+    
+    const delayedFunction = () => {
+        setRefresh(!refresh);  
+        moreDelayedFunction(); 
+    }
+
+    const moreDelayedFunction = () => {
+        setCollection({}); 
     }
 
     let displayDefaultPanel; 
