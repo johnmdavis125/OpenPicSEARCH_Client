@@ -11,6 +11,10 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
         pixabay: 1
     }); 
 
+    console.log(`panels: ${panels.pexels}`); 
+    console.log(`panels: ${panels.unsplash}`); 
+    console.log(`panels: ${panels.pixabay}`); 
+
     let panelsInput;
     let numPexelsPanels = panels.pexels; 
     let numUnsplashPanels = panels.unsplash;
@@ -50,6 +54,7 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
             }
         }
         setPanels(panelsInput); 
+        
     }
     
     // Dropdown
@@ -59,19 +64,20 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
     }
     const onAddPanelDropdownClick = (event) => {
         const selection = event; 
-        if (selection === 'pexels'){
+        console.log(`selection: ${selection}`)
+        if (selection === 'Pexels'){
             panelsInput = {
                 pexels: numPexelsPanels + 1,
                 unsplash: numUnsplashPanels,
                 pixabay: numPixabayPanels
             }
-        } else if (selection === 'unsplash'){
+        } else if (selection === 'Unsplash'){
             panelsInput = {
                 pexels: numPexelsPanels,
                 unsplash: numUnsplashPanels + 1,
                 pixabay: numPixabayPanels
             } 
-        } else if (selection === 'pixabay'){
+        } else if (selection === 'Pixabay'){
             panelsInput = {
                 pexels: numPexelsPanels,
                 unsplash: numUnsplashPanels,
@@ -125,13 +131,15 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
             <div style={{display: 'flex', overflowX: 'auto', margin: '5px'}}>
                 {itemsToRender}
             </div>
-            <CustomDropDown  
-                onSelect={onAddPanelDropdownClick}
-                btnLabel='Add Panel' 
-                customOptions={options}
-                dropdownDisabled={dropdownDisabled}
-                eventKeys={eventKeys}
-            />
+            <div style={{minWidth: '20%', marginLeft: '40%', marginRight: '40%'}}>
+                <CustomDropDown className="panelDropdown" 
+                    onSelect={onAddPanelDropdownClick}
+                    btnLabel='Add Panel' 
+                    customOptions={options}
+                    dropdownDisabled={dropdownDisabled}
+                    eventKeys={eventKeys}
+                />
+            </div>
         </div> 
     )
 }

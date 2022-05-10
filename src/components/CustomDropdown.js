@@ -16,7 +16,7 @@ const CustomDropDown = ({onSelect, btnLabel, customOptions, dropdownDisabled }) 
 
     return (
         <Dropdown onSelect={onFormSubmit}>
-            <Dropdown.Toggle variant="secondary" id="dropdown-basic" disabled={dropdownDisabled} style={{minWidth: '20%', marginLeft: '40%', marginRight: '40%'}}>
+            <Dropdown.Toggle variant="secondary" id="dropdown-basic" disabled={dropdownDisabled}>
                 {btnLabel}
             </Dropdown.Toggle>
             <Dropdown.Menu>
