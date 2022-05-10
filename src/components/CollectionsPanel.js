@@ -25,16 +25,31 @@ const CollectionsPanel = ({ collection, setCollection, renderedCollectionsList, 
         console.log(renderedCollectionsList); 
     }
 
+    let displayDefaultPanel; 
+    if (Object.keys(collection).length > 0){
+        displayDefaultPanel = 'none';
+    } else {
+        displayDefaultPanel = 'flex';
+    }
+
     return (
         <div className="collectionsPanelMainDiv">
             <div className="upperDiv">
                 <h4 className="panelTitle">Collections Panel</h4>
             </div>
             
+            
             <div className='collectionsPanelMainInner'>
                 <div className='listSidePanel'>
                     {renderedCollectionsList}
                 </div>
+                <div className='defaultDiv' style={{display: displayDefaultPanel, marginLeft: '25%'}}>
+                    <img src='/OpenPixLogoV2.png' style={{maxWidth: '250px', marginBottom: '25px'}}/>
+                    <h5>Welcome to the Collections Panel!</h5>
+                    <p>You can view all of your collections here</p>
+                    <br />
+                    <p>Click one of the options in the left side panel to get started!</p>                
+                </div> 
                 <div className="collectionsPanelImagesContainer">
                         {renderedImages}       
                 </div>

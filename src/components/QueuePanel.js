@@ -81,7 +81,7 @@ const [refreshQueuePanel, setRefreshQueuePanel] = useState(0);
                 <h5 className="panelTitle" style={{paddingLeft: '15px'}}>QUEUE</h5>
             </div>
             <div className='defaultDiv' style={{display: displayDefaultPanel}}>
-                <img src='/OpenPixLogoV2.png' style={{maxWidth: '300px'}}/>
+                <img src='/OpenPixLogoV2.png' style={{maxWidth: '250px', marginBottom: '25px'}}/>
                 <h5>Welcome to the Queue Panel!</h5>
                 <p>All of your selected images will show up here.</p>
                 <br />
