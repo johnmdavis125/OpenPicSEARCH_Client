@@ -125,7 +125,7 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
             <div style={{display: 'flex', overflowX: 'auto', margin: '5px'}}>
                 {itemsToRender}
             </div>
-            <CustomDropDown 
+            <CustomDropDown  
                 onSelect={onAddPanelDropdownClick}
                 btnLabel='Add Panel' 
                 customOptions={options}

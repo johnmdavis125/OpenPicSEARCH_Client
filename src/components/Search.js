@@ -1,5 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react';
+import ToastContainer from 'react-bootstrap/ToastContainer'; 
+import Toast from 'react-bootstrap/Toast'; 
 import axios from 'axios'; 
 import InputBar from './InputBar';
 import PanelContainer from './PanelContainer';
@@ -62,15 +64,27 @@ const Search = ({ updateQueue, mostRecentSearch, setMostRecentSearch }) => {
         }
     }
 
+    const [emptySearchToast, setEmptySearchToast] = useState(false); 
+    const toggleEmptySearchToast = () => {
+        setEmptySearchToast(!emptySearchToast); 
+    }
     const runAPISearch = (searchTerm) => {
-        searchUnsplash(searchTerm);
-        searchPexels(searchTerm);
-        searchPixabay(searchTerm);
+        if (searchTerm){
+            console.log(searchTerm); 
+            searchUnsplash(searchTerm);
+            searchPexels(searchTerm);
+            searchPixabay(searchTerm);
+        } else {
+            console.log('invalid search term');
+            toggleEmptySearchToast();  
+        }
     }
 
     
     useEffect(() => {
-        runAPISearch(mostRecentSearch); 
+        if (mostRecentSearch){
+            runAPISearch(mostRecentSearch);
+        }
     },[mostRecentSearch]);
 
     const runBrowserSearch = () => {
@@ -99,6 +113,26 @@ const Search = ({ updateQueue, mostRecentSearch, setMostRecentSearch }) => {
                 altText="All images sourced from public domain/open license databases. Enjoy :)"
                 dropDownConfig={dropDownConfig} 
             />
+            <ToastContainer className="p-3" position='middle-center'>
+                <Toast 
+                    show={emptySearchToast} 
+                    onClose={toggleEmptySearchToast}
+                    delay={4000} autohide
+                    style={{justifyContent: 'center', alignItems: 'center'}}
+                    bg='warning'
+                >
+                    <Toast.Header>
+                        <img
+                        src="holder.js/20x20?text=%20"
+                        className="rounded me-2"
+                        alt=""
+                        />
+                        <strong className="me-auto">Invalid Search</strong>
+                        <small>11 mins ago</small>
+                    </Toast.Header>
+                    <Toast.Body>Please enter a search term before clicking search :)</Toast.Body>
+                </Toast>
+            </ToastContainer>
             <PanelContainer 
                 unsplashImages={unsplashImages}
                 pexelsImages={pexelsImages}
