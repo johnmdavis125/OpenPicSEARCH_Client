@@ -11,9 +11,6 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
         pixabay: 1
     }); 
 
-    console.log(`panels: ${panels.pexels}`); 
-    console.log(`panels: ${panels.unsplash}`); 
-    console.log(`panels: ${panels.pixabay}`); 
 
     let panelsInput;
     let numPexelsPanels = panels.pexels; 

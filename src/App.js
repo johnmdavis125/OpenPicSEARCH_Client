@@ -135,16 +135,17 @@ const App = () => {
 
     const [listCollections, setListCollections] = useState([]); 
     const [collection, setCollection] = useState({}); 
+    const [collection4Update, setCollection4Update] = useState({}); 
    
     const combineInputsForPut = (imgArrParam, colTitleParam, colIDParam) => {
             console.log('execute combineInputsForPut inside the useEffect'); 
-            console.log(`collection.title: ${collection.title}`);
-            console.log(`collection.images: ${collection.images}`);
-            console.log(`collection keys: ${Object.keys(collection)}`);
+            console.log(`collection.title: ${collection4Update.title}`);
+            console.log(`collection.images: ${collection4Update.images}`);
+            console.log(`collection keys: ${Object.keys(collection4Update)}`);
             console.log(`imgArrParam: ${imgArrParam}`);
             let formattedInputImagesToAdd; 
-            if (collection.title && imgArrParam){
-                formattedInputImagesToAdd = [...collection.images, ...imgArrParam]; 
+            if (collection4Update.title && imgArrParam){
+                formattedInputImagesToAdd = [...collection4Update.images, ...imgArrParam]; 
                 console.log(`formattedInputImagesToAdd: ${formattedInputImagesToAdd}`); 
                     const formattedInput = {
                         title: colTitleParam,
@@ -244,24 +245,24 @@ const App = () => {
 
         console.log(`*******selectedResults: ${selectedResults}`); 
 
-        getCollection(targetID); 
+        getCollection4Update(targetID); 
     }
 
 
     useEffect(() => {
         const triggerUpdate = () => {
             console.log('on first run of this useEffect, collection should be undefined'); 
-            console.log(`collection.title: ${collection.title}`)
+            console.log(`collection.title: ${collection4Update.title}`)
             console.log(`selectedResults: ${selectedResults}`); 
-            if (collection.title){
+            if (collection4Update.title){
                 console.log(selectedResults); 
-                updateExistingCollection(selectedResults, collection._id, collection.title); 
+                updateExistingCollection(selectedResults, collection4Update._id, collection4Update.title); 
             } else {
                 console.log('collection not yet truthy, cannot proceed to updateExistingCollection'); 
             }
         }
         triggerUpdate(); 
-    }, [collection]); 
+    }, [collection4Update]); 
 
     async function getCollection(collectionID) {
         try {
@@ -270,6 +271,18 @@ const App = () => {
         console.log(`response: ${response}`);
         console.log(`response.data: ${response.data}`);
         setCollection(response.data); 
+        } catch (error) {
+        console.error(error);
+        }
+    }
+
+    async function getCollection4Update(collectionID) {
+        try {
+        console.log('run getCollection(colIDToUpdate)'); 
+        const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
+        console.log(`response: ${response}`);
+        console.log(`response.data: ${response.data}`);
+        setCollection4Update(response.data); 
         } catch (error) {
         console.error(error);
         }
