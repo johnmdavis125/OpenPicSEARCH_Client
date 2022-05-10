@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import InputBar from './InputBar';
 import PanelContainer from './PanelContainer';
@@ -7,7 +7,7 @@ const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;
 const PEXELS_KEY = process.env.REACT_APP_PEXELS_API_KEY;   
 const PIXABAY_KEY = process.env.REACT_APP_PIXABAY_API_KEY;
 
-const Search = ({ updateQueue }) => {
+const Search = ({ updateQueue, mostRecentSearch, setMostRecentSearch }) => {
     const [unsplashImages, setUnsplashImages] = useState([]); 
     const [pexelsImages, setPexelsImages] = useState([]); 
     const [pixabayImages, setPixabayImages] = useState([]); 
@@ -68,6 +68,11 @@ const Search = ({ updateQueue }) => {
         searchPixabay(searchTerm);
     }
 
+    
+    useEffect(() => {
+        runAPISearch(mostRecentSearch); 
+    },[mostRecentSearch]);
+
     const runBrowserSearch = () => {
         console.log('run browser search'); 
     }
@@ -86,6 +91,9 @@ const Search = ({ updateQueue }) => {
                 onSubmit={runAPISearch}
                 label={null} 
                 placeholder="Enter Search Term..." 
+                defaultTerm="random"
+                mostRecentSearch={mostRecentSearch}
+                setMostRecentSearch={setMostRecentSearch}
                 btn1Text="Search" 
                 btn2Text="Search in Browser" 
                 altText="All images sourced from public domain/open license databases. Enjoy :)"

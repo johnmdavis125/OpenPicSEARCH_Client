@@ -9,9 +9,11 @@ import Collections from './components/Collections';
 import About from './components/About'; 
 import './App.css';
 
-const App = () => {
-    
+const App = () => { 
     console.log('render app component');  
+
+    const [mostRecentSearch, setMostRecentSearch] = useState('random'); 
+    console.log(`mostRecentSearch: ${mostRecentSearch}`); 
 
     const [selectedResults, setSelectedResults] = useState([]); 
 
@@ -287,7 +289,11 @@ const App = () => {
     <div className="app">
         <Header />
         <Route path="/">
-            <Search updateQueue={updateQueue}/>
+            <Search
+                updateQueue={updateQueue}
+                mostRecentSearch={mostRecentSearch}
+                setMostRecentSearch={setMostRecentSearch}
+            />
         </Route>
         <Route path="/about">
             <About />

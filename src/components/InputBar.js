@@ -4,22 +4,24 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CustomDropDown from './CustomDropdown';
 
-const InputBar = ({onSubmit, label, placeholder, btn1Text, btn2Text, altText, dropDownConfig, listCollections }) => {
+const InputBar = ({onSubmit, label, placeholder, defaultTerm, setMostRecentSearch, btn1Text, btn2Text, altText, dropDownConfig, listCollections }) => {
   
-    const [term, setTerm] = useState(''); 
-    const [refreshInputBarState, setRefreshInputBarState] = useState(0); 
+    const [term, setTerm] = useState(defaultTerm); 
+    // const [refreshInputBarState, setRefreshInputBarState] = useState(0); 
     const onFormSubmit = (event) => {
         event.preventDefault(); 
         onSubmit(term); 
-        setRefreshInputBarState(refreshInputBarState + 1); 
+        setMostRecentSearch(term); 
+
+        // setRefreshInputBarState(refreshInputBarState + 1); 
     }
 
-    useEffect(() => {
-        const refreshInputBar = () => {
-            console.log('inputBar refresh on load'); 
-        }
-        refreshInputBar(); 
-    },[refreshInputBarState]);
+    // useEffect(() => {
+    //     const refreshInputBar = () => {
+    //         console.log('inputBar refresh on load'); 
+    //     }
+    //     refreshInputBar(); 
+    // },[refreshInputBarState]);
 
     return (
         <div>
