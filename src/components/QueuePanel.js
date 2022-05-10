@@ -1,6 +1,7 @@
 import React from 'react';
 import { useState, useEffect } from 'react'; 
 import axios from 'axios'; 
+import Card from 'react-bootstrap/Card'
 import ImageCardQueue from './ImageCardQueue';
 import InputBar from './InputBar';
 import "./QueuePanel.css";
@@ -67,10 +68,24 @@ const [refreshQueuePanel, setRefreshQueuePanel] = useState(0);
         eventKeys: updateBtnOptions
     }
 
+    let displayDefaultPanel; 
+    if (selectedResults.length > 0){
+        displayDefaultPanel = 'none';
+    } else {
+        displayDefaultPanel = 'flex';
+    }
+
     return (
         <div className="queuePanelMainDiv">
             <div className="upperDiv">
                 <h5 className="panelTitle" style={{paddingLeft: '15px'}}>QUEUE</h5>
+            </div>
+            <div className='defaultDiv' style={{display: displayDefaultPanel}}>
+                <img src='/OpenPixLogoV2.png' style={{maxWidth: '300px'}}/>
+                <h5>Welcome to the Queue Panel!</h5>
+                <p>All of your selected images will show up here.</p>
+                <br />
+                <p>It looks like you haven't made any selections yet. Head over to the Search Tab to get started!</p>                
             </div>
             <div style={{display: 'flex', justifyContent: 'center'}}>
                 <div className="queueImagesContainer">

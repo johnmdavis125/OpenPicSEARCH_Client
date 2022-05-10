@@ -15,13 +15,14 @@ const ImageCardQueue = ({ image, deselectFromQueue }) => {
        const ref = useRef(); 
        
        useEffect(() => {
+           if (ref.current){
            const current = ref.current;
            current.addEventListener('load', () => {
            const height = ref.current.clientHeight;
            const numSpans = Math.ceil(height / 10); 
            setSpans(numSpans);
-   
-           }) 
+           })
+        } 
        },[]);
     let imageTitle;
     if (image.hasOwnProperty('urls')){
