@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState, useEffect } from 'react'; 
 import axios from 'axios'; 
-import Card from 'react-bootstrap/Card'
 import ImageCardQueue from './ImageCardQueue';
 import InputBar from './InputBar';
 import "./componentStyles/QueuePanel.css";

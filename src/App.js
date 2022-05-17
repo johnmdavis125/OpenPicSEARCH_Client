@@ -9,6 +9,7 @@ import Collections from './components/Collections';
 import About from './components/About'; 
 import './components/componentStyles/App.css';
 
+
 const App = () => { 
     console.log('render app component');  
 

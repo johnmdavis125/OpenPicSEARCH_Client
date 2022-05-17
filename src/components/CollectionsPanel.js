@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios'; 
-import { useState, useEffect, useRef } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import Card from 'react-bootstrap/Card'; 
 import Button from 'react-bootstrap/Button'; 
 import CloseButton from 'react-bootstrap/CloseButton';
@@ -23,16 +23,6 @@ const CollectionsPanel = ({ collection, setCollection, deleteCollection, listCol
     }
     updateCollections(); 
     },[refresh]);  
-    
-    // const renderedCollectionsList = listCollections.map((col) => {
-    //     return (
-    //         <Button 
-    //             key={col._id}
-    //             className='listBtn'
-    //             onClick={() => getCollection(col._id)}
-    //         >{col.title}</Button>
-    //         );
-    //     });
 
     let renderedCollectionsList;
     const getRenderedCollectionsList = () => {

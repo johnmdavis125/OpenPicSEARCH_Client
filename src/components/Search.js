@@ -13,7 +13,6 @@ const Search = ({ updateQueue, mostRecentSearch, setMostRecentSearch }) => {
     const [unsplashImages, setUnsplashImages] = useState([]); 
     const [pexelsImages, setPexelsImages] = useState([]); 
     const [pixabayImages, setPixabayImages] = useState([]); 
-    // create placeholder images -> initiatlize state with a starter image in each panel
 
     async function searchUnsplash(searchTerm) {
         try {
@@ -80,7 +79,6 @@ const Search = ({ updateQueue, mostRecentSearch, setMostRecentSearch }) => {
         }
     }
 
-    
     useEffect(() => {
         if (mostRecentSearch){
             runAPISearch(mostRecentSearch);

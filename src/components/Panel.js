@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState, useEffect, useRef } from 'react'; 
+import { useState } from 'react'; 
 import ImageCard from './ImageCard';
 import CloseButton from 'react-bootstrap/CloseButton';
 import "./componentStyles/Panel.css";
