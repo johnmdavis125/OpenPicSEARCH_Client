@@ -7,7 +7,7 @@ import Search from './components/Search';
 import Queue from './components/Queue'; 
 import Collections from './components/Collections'; 
 import About from './components/About'; 
-import './App.css';
+import './components/componentStyles/App.css';
 
 const App = () => { 
     console.log('render app component');  

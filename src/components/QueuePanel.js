@@ -4,7 +4,7 @@ import axios from 'axios';
 import Card from 'react-bootstrap/Card'
 import ImageCardQueue from './ImageCardQueue';
 import InputBar from './InputBar';
-import "./QueuePanel.css";
+import "./componentStyles/QueuePanel.css";
 
 const QueuePanel = ({ selectedResults, deselectFromQueue, createNewCollection, updateCollection, listCollections, setListCollections }) => { 
     

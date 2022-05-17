@@ -1,6 +1,6 @@
 import React from 'react'; 
 import { useState, useEffect, useRef } from 'react';
-import './ImageCard.css';
+import './componentStyles/ImageCard.css';
 
 const ImageCard = ({ image, apiName, updateQueue }) => {
     

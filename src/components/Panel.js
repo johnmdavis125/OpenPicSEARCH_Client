@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react'; 
 import ImageCard from './ImageCard';
 import CloseButton from 'react-bootstrap/CloseButton';
-import "./Panel.css";
+import "./componentStyles/Panel.css";
 
 const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
     

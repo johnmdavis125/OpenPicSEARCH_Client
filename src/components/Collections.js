@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios'; 
 import Button from 'react-bootstrap/Button';
 import CollectionsPanel from './CollectionsPanel'; 
+ 
 
 const Collections = ({ setLabelsForUpdateBtn, listCollections, setListCollections, getCollection, collection, setCollection, deleteCollection}) => {
     

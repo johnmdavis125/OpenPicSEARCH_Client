@@ -2,7 +2,7 @@ import React from 'react';
 import { useState, useEffect, useRef } from 'react';
 import Card from 'react-bootstrap/Card';
 import CloseButton from 'react-bootstrap/CloseButton';
-import './ImageCardQueue.css';
+import './componentStyles/ImageCardQueue.css';
 
 const ImageCardQueue = ({ image, deselectFromQueue }) => {
 

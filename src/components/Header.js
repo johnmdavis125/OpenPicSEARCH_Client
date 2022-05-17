@@ -5,7 +5,7 @@ import Col from 'react-bootstrap/Col';
 import Image from 'react-bootstrap/Image';
 import Nav from 'react-bootstrap/Nav';
 import Link from './Link';
-import "./Header.css"; 
+import './componentStyles/Header.css'; 
 
 
 const Header = () => {  
