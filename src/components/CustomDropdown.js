@@ -10,12 +10,12 @@ const CustomDropDown = ({onSelect, btnLabel, customOptions, dropdownDisabled }) 
         )
     }
     
-    const onFormSubmit = (event) => {
+    const onDropDownSubmit = (event) => {
         onSelect(event);
     }
 
     return (
-        <Dropdown onSelect={onFormSubmit}>
+        <Dropdown onSelect={onDropDownSubmit}>
             <Dropdown.Toggle variant="secondary" id="dropdown-basic" disabled={dropdownDisabled}>
                 {btnLabel}
             </Dropdown.Toggle>
