@@ -5,10 +5,8 @@ import ImageCardQueue from './ImageCardQueue';
 import InputBar from './InputBar';
 import "./componentStyles/QueuePanel.css";
 
-const QueueNew = ({ selectedResults, deselectFromQueue, createNewCollection, updateCollection, listCollections, setListCollections }) => {
+const Queue = ({ selectedResults, deselectFromQueue, createNewCollection, updateCollection, listCollections, setListCollections }) => {
     
-    const [refreshQueuePanel, setRefreshQueuePanel] = useState(0); 
-
     useEffect(() => {
         async function getCollections() {
             try {
@@ -23,25 +21,36 @@ const QueueNew = ({ selectedResults, deselectFromQueue, createNewCollection, upd
     getCollections(); 
     },[]);
 
-    const [labelsForUpdateBtn, setLabelsForUpdateBtn] = useState([]); 
-    useEffect(() => {
-        const updateLabels = () => {
-            if (listCollections.length > 0){
-                setLabelsForUpdateBtn(listCollections);  
+    let updateFormOptions = []; 
+    const resetLabels = () => {
+        if (listCollections.length > 0){
+            for (let i = 0; i < listCollections.length; i++){
+                updateFormOptions.push(listCollections[i].title);
             }
         }
-        updateLabels(); 
-    }, [listCollections]);  
-    
-    let updateBtnOptions = [];  
-    console.log(labelsForUpdateBtn.length); 
-    const updateTheDamnLabels = () => {
-        for (let i = 0; i < labelsForUpdateBtn.length; i++){
-            updateBtnOptions.push(labelsForUpdateBtn[i].title); 
-        }
     }
-    updateTheDamnLabels(); 
+    resetLabels();   
 
+    const onAddSelectionsClick = (input) => {
+        createNewCollection(selectedResults, input);
+        resetLabels(); 
+    }   
+    
+    const dropDownConfig = {
+        onSelect: updateCollection,
+        btnLabel: 'Add to Existing Collection',
+        customOptions: updateFormOptions,
+        dropDownDisabled: false,
+        eventKeys: updateFormOptions
+    }
+    
+    let displayDefaultPanel; 
+    if (selectedResults.length > 0){
+        displayDefaultPanel = 'none';
+    } else {
+        displayDefaultPanel = 'flex';
+    }
+    
     let renderedImages = selectedResults.map((image) => {
         return (
             <ImageCardQueue key={image.id} 
@@ -51,29 +60,6 @@ const QueueNew = ({ selectedResults, deselectFromQueue, createNewCollection, upd
         )
     })
 
-    const onAddSelectionsClick = (input) => {
-        createNewCollection(selectedResults, input);
-        setRefreshQueuePanel(refreshQueuePanel + 1); 
-        updateTheDamnLabels(); 
-    }
-
-    
-
-    const dropDownConfig = {
-        onSelect: updateCollection,
-        btnLabel: 'Add to Existing Collection',
-        customOptions: updateBtnOptions,
-        dropDownDisabled: false,
-        eventKeys: updateBtnOptions
-    }
-
-    let displayDefaultPanel; 
-    if (selectedResults.length > 0){
-        displayDefaultPanel = 'none';
-    } else {
-        displayDefaultPanel = 'flex';
-    }
-    
     return (
         <div className="queuePanelMainDiv">
             <div className="upperDiv">
@@ -107,4 +93,4 @@ const QueueNew = ({ selectedResults, deselectFromQueue, createNewCollection, upd
     )
 }
 
-export default QueueNew; 
+export default Queue; 
