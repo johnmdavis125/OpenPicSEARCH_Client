@@ -1,5 +1,5 @@
 .box {
-    background-image: url('../../public/cameras.jpg');
+    background-image: url('../../../public/cameras.jpg');
     background-size: cover; 
     background-position: left;
     background-repeat: no-repeat;
