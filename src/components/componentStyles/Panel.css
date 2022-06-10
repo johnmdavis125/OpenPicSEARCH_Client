@@ -2,7 +2,7 @@
     border: 3px solid black; 
     border-radius: 5px;
     background-color: rgb(255, 255, 255);
-
+    margin-bottom: 5px;
 }
 
 .upperDiv {
@@ -19,6 +19,9 @@
     grid-auto-rows: 10px;
     /* min-width: 250px;  */
     padding-top: 15px;
+    
+    overflow: scroll;
+    max-height: 55vh;
 }
 
 .imagesContainer img {
@@ -42,24 +45,32 @@ button {
 }
 
 button:hover {
-    background-color: rgb(63, 71, 75);
+    background-color: rgb(36, 38, 40);
     color: rgb(255, 255, 255);
 }
 
 .prev {
     /* background-color: #f1f1f1; */
-    background-color: black;
-    color: white;
+    background-color: rgb(36, 38, 40, 0.1);
+    border: none;
+    border-radius: 5px;
+    color: black;
+    font-size: 25px;
     align-self: flex-start; 
     align-self: center;
     margin: 3px;
+    height: 50vh;
 }
 
 .next {
-    background-color: black;
-    color: white;
+    background-color: rgb(36, 38, 40, 0.1);
+    border: none;
+    border-radius: 5px;
+    color: black;
+    font-size: 25px;
     align-self: flex-start;
     align-self: center;
     margin: 3px; 
+    height: 50vh;
 }
 

@@ -2,6 +2,7 @@ import React from 'react';
 import Panel from './Panel'; 
 import { useState } from 'react'; 
 import CustomDropDown from './CustomDropdown';
+import "./componentStyles/PanelContainer.css";
 
 const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQueue }) => {
     
@@ -124,7 +125,7 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
     const options = ['Pexels', 'Unsplash', 'Pixabay'];
     const eventKeys = ['pexels', 'unsplash', 'pixabay'];
     return (
-        <div>
+        <div className="PanelContainer">
             <div style={{display: 'flex', overflowX: 'auto', margin: '5px'}}>
                 {itemsToRender}
             </div>

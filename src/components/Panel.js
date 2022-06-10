@@ -55,7 +55,8 @@ const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
                 <CloseButton onClick={deleteClickHelper} className="closeButton" style={{color: 'white', opacity: '0.5', paddingRight: '15px'}} variant='white'></CloseButton>
                 
             </div>
-            <div style={{display: 'flex'}}>
+
+            <div className="lowerDiv" style={{display: 'flex'}}>
                 <button
                     onClick={decrementResults}
                     disabled={leftButtonDisabled}

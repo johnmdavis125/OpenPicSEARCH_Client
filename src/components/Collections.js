@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import Card from 'react-bootstrap/Card'; 
 import Button from 'react-bootstrap/Button'; 
 import CloseButton from 'react-bootstrap/CloseButton';
-import './componentStyles/CollectionsPanel.css'; 
+import './componentStyles/Collections.css'; 
 
 
 const CollectionsNew = ({ listCollections, setListCollections, getCollection, collection, setCollection, deleteCollection }) => {

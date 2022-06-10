@@ -2,8 +2,3 @@
     box-shadow: 1px 1px 2px 1px rgba(128, 128, 128, 0.497);
     margin: 2px;
 }
-
-.selected {
-    border: 5px solid gold;
-    opacity: 0.5;
-}

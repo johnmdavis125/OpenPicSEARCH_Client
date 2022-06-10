@@ -1,6 +1,7 @@
 import React from 'react'; 
 import ToastContainer from 'react-bootstrap/ToastContainer'; 
 import Toast from 'react-bootstrap/Toast'; 
+import "./componentStyles/CustomToast.css";
 
 const CustomToast = ({ emptySearchToast, toggleEmptySearchToast }) => {    
     return (
