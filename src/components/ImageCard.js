@@ -17,9 +17,10 @@ const ImageCard = ({ image, apiName, updateQueue }) => {
   
           }) 
       },[]);
-  
+
       const selectImage = (event) => {
           event.target.classList.toggle('selected'); 
+        //   selected = !selected;
           updateQueue(image); 
       }
 
