@@ -4,13 +4,14 @@ import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CustomDropDown from './CustomDropdown';
 
-const InputBar = ({onSubmit, label, placeholder, defaultTerm, setMostRecentSearch, btn1Text, btn2Text, altText, dropDownConfig }) => {
-  
-    const [term, setTerm] = useState(defaultTerm); 
+const SearchBar = ({ onSubmit, setMostRecentSearch, onSelect }) => {
+    
+    const [term, setTerm] = useState("random"); 
 
     const onFormSubmit = (event) => {
         event.preventDefault(); 
-        onSubmit(term); 
+        onSubmit(term);
+        console.log(onSubmit);  
         setMostRecentSearch(term); 
     }
 
@@ -18,29 +19,26 @@ const InputBar = ({onSubmit, label, placeholder, defaultTerm, setMostRecentSearc
         <div>
             <Form onSubmit={onFormSubmit}>
                 <Form.Group className="m-3" style={{display: "flex", flexDirection: "column"}}>
-                <div>
-                    <Form.Label>{label}</Form.Label>
-                </div>
                 <div style={{display: 'flex', maxWidth: '1000px'}}>
                     <Form.Control
                         type="text"
-                        placeholder={placeholder}
+                        placeholder='Enter Search Term...'
                         value={term}
                         onChange={(e) => setTerm(e.target.value)}
                         />
                     <Button variant="success" type="submit" style={{minWidth: '150px'}}>
-                        {btn1Text}
+                        Search
                     </Button>
                     <CustomDropDown 
-                        onSelect={dropDownConfig.onSelect}
-                        btnLabel={btn2Text} 
-                        customOptions={dropDownConfig.customOptions}
-                        dropdownDisabled={dropDownConfig.dropdownDisabled}
-                        eventKeys={dropDownConfig.customOptions}
+                        onSelect={onSelect}
+                        btnLabel="Search in Browser" 
+                        customOptions={['Search site', 'Search site2', 'Search site3', 'Search All']}
+                        dropdownDisabled={false}
+                        eventKeys={['site1', 'site2', 'site3', 'all']}
                     />
                 </div>
                     <Form.Text className="text-muted" style={{marginLeft: "5px"}}>
-                    {altText}
+                    All images sourced from public domain/open license databases. Enjoy :)
                     </Form.Text>
                 </Form.Group>
             </Form>
@@ -48,4 +46,4 @@ const InputBar = ({onSubmit, label, placeholder, defaultTerm, setMostRecentSearc
     )
 }
 
-export default InputBar; 
+export default SearchBar; 
