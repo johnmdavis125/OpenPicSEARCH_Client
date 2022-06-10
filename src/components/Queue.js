@@ -1,8 +1,8 @@
 import React from 'react'; 
-import { useState, useEffect } from 'react'; 
+import { useEffect } from 'react'; 
 import axios from 'axios'; 
 import ImageCardQueue from './ImageCardQueue';
-import InputBar from './InputBar';
+import QueueInputBar from './QueueInputBar';
 import "./componentStyles/QueuePanel.css";
 
 const Queue = ({ selectedResults, deselectFromQueue, createNewCollection, updateCollection, listCollections, setListCollections }) => {
@@ -32,17 +32,13 @@ const Queue = ({ selectedResults, deselectFromQueue, createNewCollection, update
     resetLabels();   
 
     const onAddSelectionsClick = (input) => {
+        if (input === ''){
+            input = 'Untitled';
+        }
         createNewCollection(selectedResults, input);
         resetLabels(); 
     }   
     
-    const dropDownConfig = {
-        onSelect: updateCollection,
-        btnLabel: 'Add to Existing Collection',
-        customOptions: updateFormOptions,
-        dropDownDisabled: false,
-        eventKeys: updateFormOptions
-    }
     
     let displayDefaultPanel; 
     if (selectedResults.length > 0){
@@ -54,12 +50,12 @@ const Queue = ({ selectedResults, deselectFromQueue, createNewCollection, update
     let renderedImages = selectedResults.map((image) => {
         return (
             <ImageCardQueue key={image.id} 
-                image={image} 
-                deselectFromQueue={deselectFromQueue} 
+            image={image} 
+            deselectFromQueue={deselectFromQueue} 
             />
-        )
-    })
-
+            )
+        })
+        
     return (
         <div className="queuePanelMainDiv">
             <div className="upperDiv">
@@ -78,15 +74,11 @@ const Queue = ({ selectedResults, deselectFromQueue, createNewCollection, update
                 </div>        
             </div>
             <div>
-                <InputBar 
-                    onSubmit={onAddSelectionsClick}
-                    label={null} 
-                    placeholder="Enter Title of Your New Collection..." 
-                    btn1Text="New Collection" 
-                    btn2Text="Add to Existing Collection Instead" 
-                    altText="Add all images in your queue to a new or existing collection!"
-                    dropDownConfig={dropDownConfig}
-                    listCollections={listCollections} 
+                <QueueInputBar 
+                    onSubmit={onAddSelectionsClick} 
+                    onSelect={updateCollection}
+                    customOptions={updateFormOptions}
+                    eventKeys={updateFormOptions}
                 />
             </div>
         </div>
