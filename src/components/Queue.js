@@ -3,7 +3,7 @@ import { useEffect } from 'react';
 import axios from 'axios'; 
 import ImageCardQueue from './ImageCardQueue';
 import QueueInputBar from './QueueInputBar';
-import "./componentStyles/QueuePanel.css";
+import "./componentStyles/Queue.css";
 
 const Queue = ({ selectedResults, deselectFromQueue, createNewCollection, updateCollection, listCollections, setListCollections }) => {
     

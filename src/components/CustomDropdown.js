@@ -1,5 +1,6 @@
 import React from 'react'; 
 import Dropdown from 'react-bootstrap/Dropdown';
+import "./componentStyles/CustomDropdown.css";
 
 const CustomDropDown = ({onSelect, btnLabel, customOptions, dropdownDisabled }) => {
     

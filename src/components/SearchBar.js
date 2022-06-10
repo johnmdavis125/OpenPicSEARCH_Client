@@ -3,6 +3,7 @@ import { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 import CustomDropDown from './CustomDropdown';
+import './componentStyles/SearchBar.css';
 
 const SearchBar = ({ onSubmit, setMostRecentSearch, onSelect }) => {
     
