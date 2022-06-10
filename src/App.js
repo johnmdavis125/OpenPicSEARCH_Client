@@ -8,10 +8,11 @@ import Queue from './components/Queue';
 import Collections from './components/Collections'; 
 import About from './components/About'; 
 import './components/componentStyles/App.css';
-
+import myFunc from './components/utils/utilMethods.mjs';
 
 const App = () => { 
     console.log('render app component');  
+    myFunc(); 
 
     const [mostRecentSearch, setMostRecentSearch] = useState('random'); 
     console.log(`mostRecentSearch: ${mostRecentSearch}`); 
