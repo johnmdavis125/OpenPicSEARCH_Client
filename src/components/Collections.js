@@ -7,11 +7,9 @@ import CloseButton from 'react-bootstrap/CloseButton';
 import './componentStyles/Collections.css'; 
 
 
-const CollectionsNew = ({ listCollections, setListCollections, getCollection, collection, setCollection, deleteCollection }) => {
-    
-    console.log('render collectionsNew component');
+const Collections = ({ listCollections, setListCollections, deleteCollection }) => {
 
-    const [refresh, setRefresh] = useState(false); 
+    const [collection, setCollection] = useState({}); 
 
     useEffect(() => {
         async function updateCollections() {
@@ -19,16 +17,27 @@ const CollectionsNew = ({ listCollections, setListCollections, getCollection, co
             const response = await axios.get('http://localhost:3001/api/collections');
             console.log(response);
             console.log(response.data);
+            console.log('message2');
             setListCollections(response.data); 
         } catch (error) {
             console.error(error);
         }
     }
     updateCollections(); 
-    },[refresh]);  
+    },[collection]);  
+
+    async function getCollection(collectionID) {
+        try {
+            const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
+            setCollection(response.data); 
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
     let renderedCollectionsList;
     const getRenderedCollectionsList = () => {
+        console.log('message1');
         renderedCollectionsList = listCollections.map((col) => {
             return (
                 <Button 
@@ -41,34 +50,14 @@ const CollectionsNew = ({ listCollections, setListCollections, getCollection, co
     }
     getRenderedCollectionsList(); 
 
-        let renderedImages; 
-        Object.keys(collection).length > 0 ? 
-        renderedImages = collection.images.map((image) => {
-            return (
-                <Card key={image.id} style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src={image.imgSrc} />
     
-                </Card>
-            )
-        }) : renderedImages = []; 
-
     const deleteMe = () => {
-        console.log('run delete me function'); 
-        console.log(collection._id); 
-        console.log(collection.title); 
-
         deleteCollection(collection._id); 
-        console.log(renderedCollectionsList); 
-        delayedFunction(); 
-    }
-    
-    const delayedFunction = () => {
-        setRefresh(!refresh);  
-        moreDelayedFunction(); 
-    }
-
-    const moreDelayedFunction = () => {
-        setCollection({}); 
+        requestAnimationFrame(() => setCollection({}));
+        // setTimeout(() => {
+        //     setCollection({})
+        // }, 0);
+        requestAnimationFrame(getRenderedCollectionsList);
     }
 
     let displayDefaultPanel; 
@@ -77,16 +66,23 @@ const CollectionsNew = ({ listCollections, setListCollections, getCollection, co
     } else {
         displayDefaultPanel = 'flex';
     }
-    
 
-    
+    let renderedImages; 
+    Object.keys(collection).length > 0 ? 
+    renderedImages = collection.images.map((image) => {
+        return (
+            <Card key={image._id} style={{ width: '18rem' }}>
+                <Card.Img variant="top" src={image.imgSrc} />
+            </Card>
+        )
+    }) : renderedImages = []; 
+       
     return (
         <div className='collectionsMain'>
             <div className="collectionsPanelMainDiv">
                 <div className="upperDiv">
                     <h4 className="panelTitle">Collections Panel</h4>
                 </div>
-                
                 
                 <div className='collectionsPanelMainInner'>
                     <div className='listSidePanel'>
@@ -106,7 +102,7 @@ const CollectionsNew = ({ listCollections, setListCollections, getCollection, co
                         onClick={deleteMe}
                         className="closeButton"
                         style={{color: 'white', opacity: '0.5'}}
-                        variant="dark">
+                        >
                     </CloseButton>
                 </div>
             </div>
@@ -115,4 +111,4 @@ const CollectionsNew = ({ listCollections, setListCollections, getCollection, co
     )
 }
 
-export default CollectionsNew; 
+export default Collections; 

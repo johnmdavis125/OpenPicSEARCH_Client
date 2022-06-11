@@ -8,14 +8,12 @@ import Queue from './components/Queue';
 import Collections from './components/Collections'; 
 import About from './components/About'; 
 import './components/componentStyles/App.css';
-// import myFunc from './components/utils/utilMethods.mjs';
+import formatImgArray from './components/utils/utilMethods.mjs';
 
 const App = () => { 
-// SEARCH -> Props = mostRecentSearch, setMostRecentSearch, updateQueue
-    // State
     const [mostRecentSearch, setMostRecentSearch] = useState('random'); 
     const [selectedResults, setSelectedResults] = useState([]); 
-    // Ftns
+
     const deselectFromQueue = (image) => {
         if (selectedResults.includes(image)){
             const indexToRemove = selectedResults.indexOf(image); 
@@ -35,13 +33,13 @@ const App = () => {
         }
     }
     
-    // QUEUE -> Props = selectedResults, deselectFromQueue, createNewCollection, updateCollection, setListCollections, listCollections
-    // State
-    const [collection, setCollection] = useState({}); 
+
     const [listCollections, setListCollections] = useState([]); 
     const [collection4Update, setCollection4Update] = useState({}); 
-    // Ftns
-    const postCollection = (formattedInput) => {
+    
+    const createNewCollection = (unformattedImgArrForNewCol, colTitle) => {
+        let formattedInput = formatImgArray(unformattedImgArrForNewCol, colTitle); 
+        
         axios.post('http://localhost:3001/api/collections', formattedInput)
         .then(function (response) {
         })
@@ -49,46 +47,6 @@ const App = () => {
             console.log(error);
         });
         setSelectedResults([]);
-    }; 
-    
-    const createNewCollection = (unformattedImgArrForNewCol, colTitle) => {
-        let formattedImgArr = unformattedImgArrForNewCol.map((image) => {
-            if (image.hasOwnProperty('urls')){
-                return ({
-                    imgSrc: image.urls.regular,
-                    description: image.description,
-                    photographer: image.user.name,
-                    portfolioURL: image.user.links.portfolio,
-                    apiName: 'Unsplash',
-                    apiID: image.id
-                });
-            } else if (image.hasOwnProperty('src')){
-                return ({
-                    imgSrc: image.src.medium, 
-                    description: image.alt,
-                    photographer: image.photographer,
-                    portfolioURL: image.photographer.url,
-                    apiName: 'Pexels',
-                    apiID: image.id
-                });
-            } else if (image.hasOwnProperty('webformatURL')){
-                return ({
-                    imgSrc: image.webformatURL, 
-                    description: image.tags,
-                    photographer: image.user,
-                    portfolioURL: image.userImageURL,
-                    apiName: 'Pixabay',
-                    apiID: image.id
-                });
-            }
-        })
-        
-        const formattedInput = {
-            title: colTitle,
-            images: formattedImgArr
-        }
-        
-        postCollection(formattedInput); 
     }
 
     async function getCollection4Update(collectionID) {
@@ -99,96 +57,35 @@ const App = () => {
         console.error(error);
         }
     }
-    let useThisTargetIDTOCallUpdateExistingCollection; 
-    let useThisTargetTitleTOCallUpdateExistingCollection; 
-    const updateCollection = (event) => {
-        const colToUpdateTitle = event; 
-    
-        let targetID;
-        // rename -> not an arrayContainingTargetIDs...
-        const arrContainingTargetIDs = listCollections.map((col) => {
+
+    const updateCollection = (colToUpdateTitle) => {
+        let colToUpdateID;
+        const tempArray = listCollections.map((col) => {
             if (col.title === colToUpdateTitle){
-              targetID = col._id;   
+              colToUpdateID = col._id;   
             }
-            console.log(`targetID: ${targetID}`);
-            return targetID; 
+            return colToUpdateID; 
         });
-        console.log(`arrContainingTargetIDs: ${arrContainingTargetIDs}`); 
+        getCollection4Update(colToUpdateID); 
+    }      
     
-        for (let i = 0; i < listCollections.length; i++){
-            if (listCollections[i]._id === targetID){
-                let targetIndex = i; 
-                console.log(`listCollections[targetIndex].title: ${listCollections[targetIndex].title}`);   
-                console.log(`listCollections[targetIndex]._id: ${listCollections[targetIndex]._id}`);   
-            }
+    const updateExistingCollection = async (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
+        let newImages = formatImgArray(unformattedImgArrForUpdatingCol, colToUpdateTitle).images; 
+        let existingImages = collection4Update.images; 
+        let updatedImgArray = [...existingImages, ...newImages]; 
+            
+        const formattedInput = {
+            title: colToUpdateTitle,
+            images: updatedImgArray
         }
-        console.log(`targetID: ${targetID}`); 
-        useThisTargetIDTOCallUpdateExistingCollection = targetID; 
-        console.log(`useThisTargetIDTO: ${useThisTargetIDTOCallUpdateExistingCollection}`); 
-         
-        console.log(`colToUpdateTitle: ${colToUpdateTitle}`); 
-        useThisTargetTitleTOCallUpdateExistingCollection = colToUpdateTitle;
-        console.log(`useThisTargetTitleTO: ${useThisTargetTitleTOCallUpdateExistingCollection}`); 
 
-        console.log(`*******selectedResults: ${selectedResults}`); 
-
-        getCollection4Update(targetID); 
-    }
-    
-    const putCollection = async (formattedInput, colIDToUpdate) => {
         await axios.put(`http://localhost:3001/api/collections/${colIDToUpdate}`, formattedInput)
         .then(function (response) {
         })
         .catch(function (error) {
             console.log(error);
         });
-        setSelectedResults([]);
-    }; 
-    
-    const combineInputsForPut = (imgArrParam, colTitleParam, colIDParam) => {
-        let formattedInputImagesToAdd; 
-        if (collection4Update.title && imgArrParam){
-            formattedInputImagesToAdd = [...collection4Update.images, ...imgArrParam]; 
-            const formattedInput = {
-                title: colTitleParam,
-                images: formattedInputImagesToAdd
-            }
-            putCollection(formattedInput, colIDParam);         
-        }
-    }        
-    
-    const updateExistingCollection = (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
-        let formattedImgArr = selectedResults.map((image) => {
-            if (image.hasOwnProperty('urls')){
-                return ({
-                    imgSrc: image.urls.regular,
-                    description: image.description,
-                    photographer: image.user.name,
-                    portfolioURL: image.user.links.portfolio,
-                    apiName: 'Unsplash',
-                    apiID: image.id
-                });
-            } else if (image.hasOwnProperty('src')){
-                return ({
-                    imgSrc: image.src.medium, 
-                    description: image.alt,
-                    photographer: image.photographer,
-                    portfolioURL: image.photographer.url,
-                    apiName: 'Pexels',
-                    apiID: image.id
-                });
-            } else if (image.hasOwnProperty('webformatURL')){
-                return ({
-                    imgSrc: image.webformatURL, 
-                    description: image.tags,
-                    photographer: image.user,
-                    portfolioURL: image.userImageURL,
-                    apiName: 'Pixabay',
-                    apiID: image.id
-                });
-            }
-        })
-        combineInputsForPut(formattedImgArr, colToUpdateTitle, colIDToUpdate); 
+        setSelectedResults([]);    
     }      
     
     useEffect(() => {
@@ -200,16 +97,6 @@ const App = () => {
         triggerUpdate(); 
     }, [collection4Update]); 
     
-    async function getCollection(collectionID) {
-        try {
-            const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
-            setCollection(response.data); 
-        } catch (error) {
-            console.error(error);
-        }
-    }
-    
-    // COLLECTIONS -> Props: listCollections, setListCollections, getCollection, collection, setCollection, deleteCollection
     const deleteCollection = async (collectionID) => {
         try {
             const response = await axios.delete(`http://localhost:3001/api/collections/${collectionID}`); 
@@ -246,9 +133,6 @@ const App = () => {
             <Collections 
                 listCollections={listCollections}
                 setListCollections={setListCollections}
-                getCollection={getCollection}
-                collection={collection}
-                setCollection={setCollection}
                 deleteCollection={deleteCollection}
             />
         </Route>

@@ -78,13 +78,13 @@ let config = {
                         onClick={deselect}
                         className="closeButton"
                         style={{color: 'white', opacity: '0.5'}}
-                        variant="dark">
+                    >
                     </CloseButton>
                 </div>
                 <Card.Text>
-                    <p>Image Source: {config.apiName}</p>
-                    <p>Photographer: {config.photographer}</p>
-                    <a href={config.portfolioLink}>Photographer Portfolio</a>
+                    <span>Image Source: {config.apiName}</span><br />
+                    <span>Photographer: {config.photographer}</span><br />
+                    <span><a href={config.portfolioLink}>Photographer Portfolio</a></span>
                 </Card.Text>
             </Card.Body>
             </div>

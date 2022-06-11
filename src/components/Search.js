@@ -70,12 +70,10 @@ const Search = ({ mostRecentSearch, setMostRecentSearch, updateQueue }) => {
 
     const runAPISearch = (searchTerm) => {
         if (searchTerm){
-            console.log(searchTerm); 
             searchUnsplash(searchTerm);
             searchPexels(searchTerm);
             searchPixabay(searchTerm);
         } else {
-            console.log('invalid search term');
             toggleEmptySearchToast();  
         }
     }

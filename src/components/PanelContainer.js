@@ -90,11 +90,13 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
     // Conditional Render Panels
     let arrKeys = Object.keys(panels);
     let itemsToRender = []; 
+    let panelKey = 'panel';
     for (let i = 0; i < arrKeys.length; i++){
          for (let j = 0; j < panels[arrKeys[i]]; j++){
             if (arrKeys[i] === 'unsplash'){
                 itemsToRender.push(
                     <Panel
+                        key={`${panels.unsplash}${panelKey}${i}`}  
                         images={unsplashImages}
                         apiName='Unsplash'
                         onDeleteClick={onDeleteClick}
@@ -102,7 +104,8 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
                     />);
             } else if (arrKeys[i] === 'pexels'){
                 itemsToRender.push(
-                    <Panel
+                    <Panel 
+                        key={`${panels.pexels}${panelKey}${i}`}
                         images={pexelsImages}
                         apiName='Pexels'
                         onDeleteClick={onDeleteClick}
@@ -110,7 +113,8 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
                     />);
             } else if (arrKeys[i] === 'pixabay'){
                 itemsToRender.push(
-                    <Panel
+                    <Panel  
+                        key={`${panels.pixabay}${panelKey}${i}`}    
                         images={pixabayImages} 
                         apiName='Pixabay'
                         onDeleteClick={onDeleteClick}
