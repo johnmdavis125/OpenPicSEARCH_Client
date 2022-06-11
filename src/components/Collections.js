@@ -53,8 +53,11 @@ const Collections = ({ listCollections, setListCollections, deleteCollection }) 
     
     const deleteMe = () => {
         deleteCollection(collection._id); 
-        requestAnimationFrame(setCollection({}));
-        requestAnimationFrame(getRenderedCollectionsList());
+        requestAnimationFrame(() => setCollection({}));
+        // setTimeout(() => {
+        //     setCollection({})
+        // }, 0);
+        requestAnimationFrame(getRenderedCollectionsList);
     }
 
     let displayDefaultPanel; 
@@ -68,7 +71,7 @@ const Collections = ({ listCollections, setListCollections, deleteCollection }) 
     Object.keys(collection).length > 0 ? 
     renderedImages = collection.images.map((image) => {
         return (
-            <Card key={image.id} style={{ width: '18rem' }}>
+            <Card key={image._id} style={{ width: '18rem' }}>
                 <Card.Img variant="top" src={image.imgSrc} />
             </Card>
         )
