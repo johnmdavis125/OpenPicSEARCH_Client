@@ -92,28 +92,25 @@ const App = () => {
         console.log(`*******selectedResults: ${selectedResults}`); 
 
         getCollection4Update(targetID); 
-    }
+    }      
     
-    const putCollection = async (formattedInput, colIDToUpdate) => {
+    const updateExistingCollection = async (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
+        let newImages = formatImgArray(unformattedImgArrForUpdatingCol, colToUpdateTitle).images; 
+        let existingImages = collection4Update.images; 
+        let updatedImgArray = [...existingImages, ...newImages]; 
+            
+        const formattedInput = {
+            title: colToUpdateTitle,
+            images: updatedImgArray
+        }
+        
         await axios.put(`http://localhost:3001/api/collections/${colIDToUpdate}`, formattedInput)
         .then(function (response) {
         })
         .catch(function (error) {
             console.log(error);
         });
-        setSelectedResults([]);
-    };       
-    
-    const updateExistingCollection = (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
-        let formattedImgArr = formatImgArray(unformattedImgArrForUpdatingCol, colToUpdateTitle); 
-
-        let formattedInputImagesToAdd = [...collection4Update.images, ...formattedImgArr.images]; 
-            
-        const formattedInput = {
-            title: colToUpdateTitle,
-            images: formattedInputImagesToAdd
-        }
-        putCollection(formattedInput, colIDToUpdate);         
+        setSelectedResults([]);    
     }      
     
     useEffect(() => {
