@@ -99,7 +99,7 @@ const Collections = ({ listCollections, setListCollections, deleteCollection }) 
                         onClick={deleteMe}
                         className="closeButton"
                         style={{color: 'white', opacity: '0.5'}}
-                        variant="dark">
+                        >
                     </CloseButton>
                 </div>
             </div>

@@ -97,15 +97,6 @@ const App = () => {
         triggerUpdate(); 
     }, [collection4Update]); 
     
-    // async function getCollection(collectionID) {
-    //     try {
-    //         const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
-    //         setCollection(response.data); 
-    //     } catch (error) {
-    //         console.error(error);
-    //     }
-    // }
-    
     const deleteCollection = async (collectionID) => {
         try {
             const response = await axios.delete(`http://localhost:3001/api/collections/${collectionID}`); 
