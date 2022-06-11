@@ -11,11 +11,9 @@ import './components/componentStyles/App.css';
 import formatImgArray from './components/utils/utilMethods.mjs';
 
 const App = () => { 
-// SEARCH -> Props = mostRecentSearch, setMostRecentSearch, updateQueue
-    // State
     const [mostRecentSearch, setMostRecentSearch] = useState('random'); 
     const [selectedResults, setSelectedResults] = useState([]); 
-    // Ftns
+
     const deselectFromQueue = (image) => {
         if (selectedResults.includes(image)){
             const indexToRemove = selectedResults.indexOf(image); 
@@ -35,13 +33,13 @@ const App = () => {
         }
     }
     
-    // QUEUE -> Props = selectedResults, deselectFromQueue, createNewCollection, updateCollection, setListCollections, listCollections
-    // State
     const [collection, setCollection] = useState({}); 
     const [listCollections, setListCollections] = useState([]); 
     const [collection4Update, setCollection4Update] = useState({}); 
-    // Ftns
-    const postCollection = (formattedInput) => {
+    
+    const createNewCollection = (unformattedImgArrForNewCol, colTitle) => {
+        let formattedInput = formatImgArray(unformattedImgArrForNewCol, colTitle); 
+        
         axios.post('http://localhost:3001/api/collections', formattedInput)
         .then(function (response) {
         })
@@ -49,11 +47,6 @@ const App = () => {
             console.log(error);
         });
         setSelectedResults([]);
-    }; 
-    
-    const createNewCollection = (unformattedImgArrForNewCol, colTitle) => {
-        let formattedInput = formatImgArray(unformattedImgArrForNewCol, colTitle); 
-        postCollection(formattedInput); 
     }
 
     async function getCollection4Update(collectionID) {
@@ -64,6 +57,7 @@ const App = () => {
         console.error(error);
         }
     }
+
     let useThisTargetIDTOCallUpdateExistingCollection; 
     let useThisTargetTitleTOCallUpdateExistingCollection; 
     const updateCollection = (event) => {
@@ -140,7 +134,6 @@ const App = () => {
         }
     }
     
-    // COLLECTIONS -> Props: listCollections, setListCollections, getCollection, collection, setCollection, deleteCollection
     const deleteCollection = async (collectionID) => {
         try {
             const response = await axios.delete(`http://localhost:3001/api/collections/${collectionID}`); 
