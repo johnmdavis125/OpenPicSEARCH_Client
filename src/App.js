@@ -33,7 +33,7 @@ const App = () => {
         }
     }
     
-    const [collection, setCollection] = useState({}); 
+
     const [listCollections, setListCollections] = useState([]); 
     const [collection4Update, setCollection4Update] = useState({}); 
     
@@ -97,14 +97,14 @@ const App = () => {
         triggerUpdate(); 
     }, [collection4Update]); 
     
-    async function getCollection(collectionID) {
-        try {
-            const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
-            setCollection(response.data); 
-        } catch (error) {
-            console.error(error);
-        }
-    }
+    // async function getCollection(collectionID) {
+    //     try {
+    //         const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
+    //         setCollection(response.data); 
+    //     } catch (error) {
+    //         console.error(error);
+    //     }
+    // }
     
     const deleteCollection = async (collectionID) => {
         try {
@@ -142,9 +142,6 @@ const App = () => {
             <Collections 
                 listCollections={listCollections}
                 setListCollections={setListCollections}
-                getCollection={getCollection}
-                collection={collection}
-                setCollection={setCollection}
                 deleteCollection={deleteCollection}
             />
         </Route>
