@@ -108,23 +108,18 @@ const App = () => {
             console.log(error);
         });
         setSelectedResults([]);
-    }; 
-    
-    const combineInputsForPut = (imgArrParam, colTitleParam, colIDParam) => {
-        let formattedInputImagesToAdd; 
-        if (collection4Update.title && imgArrParam){
-            formattedInputImagesToAdd = [...collection4Update.images, ...imgArrParam.images]; 
-            const formattedInput = {
-                title: colTitleParam,
-                images: formattedInputImagesToAdd
-            }
-            putCollection(formattedInput, colIDParam);         
-        }
-    }        
+    };       
     
     const updateExistingCollection = (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
         let formattedImgArr = formatImgArray(unformattedImgArrForUpdatingCol, colToUpdateTitle); 
-        combineInputsForPut(formattedImgArr, colToUpdateTitle, colIDToUpdate); 
+
+        let formattedInputImagesToAdd = [...collection4Update.images, ...formattedImgArr.images]; 
+            
+        const formattedInput = {
+            title: colToUpdateTitle,
+            images: formattedInputImagesToAdd
+        }
+        putCollection(formattedInput, colIDToUpdate);         
     }      
     
     useEffect(() => {
