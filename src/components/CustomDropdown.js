@@ -11,8 +11,8 @@ const CustomDropDown = ({onSelect, btnLabel, customOptions, dropdownDisabled }) 
         )
     }
     
-    const onDropDownSubmit = (event) => {
-        onSelect(event);
+    const onDropDownSubmit = (selection) => {
+        onSelect(selection);
     }
 
     return (

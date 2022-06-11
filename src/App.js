@@ -58,40 +58,15 @@ const App = () => {
         }
     }
 
-    let useThisTargetIDTOCallUpdateExistingCollection; 
-    let useThisTargetTitleTOCallUpdateExistingCollection; 
-    const updateCollection = (event) => {
-        const colToUpdateTitle = event; 
-    
-        let targetID;
-        // rename -> not an arrayContainingTargetIDs...
-        const arrContainingTargetIDs = listCollections.map((col) => {
+    const updateCollection = (colToUpdateTitle) => {
+        let colToUpdateID;
+        const tempArray = listCollections.map((col) => {
             if (col.title === colToUpdateTitle){
-              targetID = col._id;   
+              colToUpdateID = col._id;   
             }
-            console.log(`targetID: ${targetID}`);
-            return targetID; 
+            return colToUpdateID; 
         });
-        console.log(`arrContainingTargetIDs: ${arrContainingTargetIDs}`); 
-    
-        for (let i = 0; i < listCollections.length; i++){
-            if (listCollections[i]._id === targetID){
-                let targetIndex = i; 
-                console.log(`listCollections[targetIndex].title: ${listCollections[targetIndex].title}`);   
-                console.log(`listCollections[targetIndex]._id: ${listCollections[targetIndex]._id}`);   
-            }
-        }
-        console.log(`targetID: ${targetID}`); 
-        useThisTargetIDTOCallUpdateExistingCollection = targetID; 
-        console.log(`useThisTargetIDTO: ${useThisTargetIDTOCallUpdateExistingCollection}`); 
-         
-        console.log(`colToUpdateTitle: ${colToUpdateTitle}`); 
-        useThisTargetTitleTOCallUpdateExistingCollection = colToUpdateTitle;
-        console.log(`useThisTargetTitleTO: ${useThisTargetTitleTOCallUpdateExistingCollection}`); 
-
-        console.log(`*******selectedResults: ${selectedResults}`); 
-
-        getCollection4Update(targetID); 
+        getCollection4Update(colToUpdateID); 
     }      
     
     const updateExistingCollection = async (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
@@ -103,7 +78,7 @@ const App = () => {
             title: colToUpdateTitle,
             images: updatedImgArray
         }
-        
+
         await axios.put(`http://localhost:3001/api/collections/${colIDToUpdate}`, formattedInput)
         .then(function (response) {
         })
