@@ -8,7 +8,7 @@ import Queue from './components/Queue';
 import Collections from './components/Collections'; 
 import About from './components/About'; 
 import './components/componentStyles/App.css';
-// import myFunc from './components/utils/utilMethods.mjs';
+import formatImgArray from './components/utils/utilMethods.mjs';
 
 const App = () => { 
 // SEARCH -> Props = mostRecentSearch, setMostRecentSearch, updateQueue
@@ -52,42 +52,7 @@ const App = () => {
     }; 
     
     const createNewCollection = (unformattedImgArrForNewCol, colTitle) => {
-        let formattedImgArr = unformattedImgArrForNewCol.map((image) => {
-            if (image.hasOwnProperty('urls')){
-                return ({
-                    imgSrc: image.urls.regular,
-                    description: image.description,
-                    photographer: image.user.name,
-                    portfolioURL: image.user.links.portfolio,
-                    apiName: 'Unsplash',
-                    apiID: image.id
-                });
-            } else if (image.hasOwnProperty('src')){
-                return ({
-                    imgSrc: image.src.medium, 
-                    description: image.alt,
-                    photographer: image.photographer,
-                    portfolioURL: image.photographer.url,
-                    apiName: 'Pexels',
-                    apiID: image.id
-                });
-            } else if (image.hasOwnProperty('webformatURL')){
-                return ({
-                    imgSrc: image.webformatURL, 
-                    description: image.tags,
-                    photographer: image.user,
-                    portfolioURL: image.userImageURL,
-                    apiName: 'Pixabay',
-                    apiID: image.id
-                });
-            }
-        })
-        
-        const formattedInput = {
-            title: colTitle,
-            images: formattedImgArr
-        }
-        
+        let formattedInput = formatImgArray(unformattedImgArrForNewCol, colTitle); 
         postCollection(formattedInput); 
     }
 
@@ -148,7 +113,7 @@ const App = () => {
     const combineInputsForPut = (imgArrParam, colTitleParam, colIDParam) => {
         let formattedInputImagesToAdd; 
         if (collection4Update.title && imgArrParam){
-            formattedInputImagesToAdd = [...collection4Update.images, ...imgArrParam]; 
+            formattedInputImagesToAdd = [...collection4Update.images, ...imgArrParam.images]; 
             const formattedInput = {
                 title: colTitleParam,
                 images: formattedInputImagesToAdd
@@ -158,36 +123,7 @@ const App = () => {
     }        
     
     const updateExistingCollection = (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
-        let formattedImgArr = selectedResults.map((image) => {
-            if (image.hasOwnProperty('urls')){
-                return ({
-                    imgSrc: image.urls.regular,
-                    description: image.description,
-                    photographer: image.user.name,
-                    portfolioURL: image.user.links.portfolio,
-                    apiName: 'Unsplash',
-                    apiID: image.id
-                });
-            } else if (image.hasOwnProperty('src')){
-                return ({
-                    imgSrc: image.src.medium, 
-                    description: image.alt,
-                    photographer: image.photographer,
-                    portfolioURL: image.photographer.url,
-                    apiName: 'Pexels',
-                    apiID: image.id
-                });
-            } else if (image.hasOwnProperty('webformatURL')){
-                return ({
-                    imgSrc: image.webformatURL, 
-                    description: image.tags,
-                    photographer: image.user,
-                    portfolioURL: image.userImageURL,
-                    apiName: 'Pixabay',
-                    apiID: image.id
-                });
-            }
-        })
+        let formattedImgArr = formatImgArray(unformattedImgArrForUpdatingCol, colToUpdateTitle); 
         combineInputsForPut(formattedImgArr, colToUpdateTitle, colIDToUpdate); 
     }      
     
