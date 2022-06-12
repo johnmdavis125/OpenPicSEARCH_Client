@@ -54,17 +54,17 @@ const Collections = ({ listCollections, setListCollections, deleteCollection }) 
     const deleteMe = () => {
         deleteCollection(collection._id); 
         requestAnimationFrame(() => setCollection({}));
-        // setTimeout(() => {
-        //     setCollection({})
-        // }, 0);
         requestAnimationFrame(getRenderedCollectionsList);
     }
 
     let displayDefaultPanel; 
+    let displayDeleteButton;
     if (Object.keys(collection).length > 0){
         displayDefaultPanel = 'none';
+        displayDeleteButton = 'flex';
     } else {
         displayDefaultPanel = 'flex';
+        displayDeleteButton = 'none';
     }
 
     let renderedImages; 
@@ -101,7 +101,7 @@ const Collections = ({ listCollections, setListCollections, deleteCollection }) 
                     <CloseButton 
                         onClick={deleteMe}
                         className="closeButton"
-                        style={{color: 'white', opacity: '0.5'}}
+                        style={{display: displayDeleteButton, color: 'white', opacity: '0.5'}}
                         >
                     </CloseButton>
                 </div>
