@@ -11,6 +11,7 @@ const PEXELS_KEY = process.env.REACT_APP_PEXELS_API_KEY;
 const PIXABAY_KEY = process.env.REACT_APP_PIXABAY_API_KEY;
 
 const Search = ({ mostRecentSearch, setMostRecentSearch, updateQueue }) => {
+// Public API Calls
     const [unsplashImages, setUnsplashImages] = useState([]); 
     const [pexelsImages, setPexelsImages] = useState([]); 
     const [pixabayImages, setPixabayImages] = useState([]); 
@@ -64,11 +65,13 @@ const Search = ({ mostRecentSearch, setMostRecentSearch, updateQueue }) => {
         }
     }
 
+// Handle user search with no term
     const [emptySearchToast, setEmptySearchToast] = useState(false); 
     const toggleEmptySearchToast = () => {
         setEmptySearchToast(!emptySearchToast); 
     }
 
+// Handle user search
     const runAPISearch = (searchTerm) => {
         if (searchTerm){
             searchUnsplash(searchTerm);
@@ -86,7 +89,8 @@ const Search = ({ mostRecentSearch, setMostRecentSearch, updateQueue }) => {
         }
         gracefullyLoad(); 
     },[mostRecentSearch]);
-
+    
+// Handle user browser search
     const runBrowserSearch = () => {
         console.log('run browser search'); 
     }

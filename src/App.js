@@ -8,12 +8,12 @@ import Queue from './components/Queue';
 import Collections from './components/Collections'; 
 import About from './components/About'; 
 import './components/componentStyles/App.css';
-import {formatImgArray as reFormat} from './components/utils/utilMethods.mjs';
 
 const App = () => { 
-// User searches for images & makes selections (adds to queue/removes from queue)
+
     const [mostRecentSearch, setMostRecentSearch] = useState('random'); 
     const [selectedResults, setSelectedResults] = useState([]); 
+    const [listCollections, setListCollections] = useState([]); 
 
     const deselectFromQueue = (image) => {
         if (selectedResults.includes(image)){
@@ -33,69 +33,7 @@ const App = () => {
             setSelectedResults([...selectedResults, image]); 
         }
     }
-// User creates new collections or updates existing collections
-    const [listCollections, setListCollections] = useState([]); 
-    const [collection4Update, setCollection4Update] = useState({}); 
-    
-    const createNewCollection = (unformattedImgArrForNewCol, colTitle) => {
-        let formattedInput = reFormat(unformattedImgArrForNewCol, colTitle); 
-        
-        axios.post('http://localhost:3001/api/collections', formattedInput)
-        .then(function (response) {
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-        setSelectedResults([]);
-    }
 
-    async function getCollection4Update(collectionID) {
-        try {
-        const response = await axios.get(`http://localhost:3001/api/collections/${collectionID}`);
-        setCollection4Update(response.data); 
-        } catch (error) {
-        console.error(error);
-        }
-    }
-
-    const updateCollection = (colToUpdateTitle) => {
-        let colToUpdateID;
-        const tempArray = listCollections.map((col) => {
-            if (col.title === colToUpdateTitle){
-              colToUpdateID = col._id;   
-            }
-            return colToUpdateID; 
-        });
-        getCollection4Update(colToUpdateID); 
-    }      
-    
-    const updateExistingCollection = async (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
-        let newImages = reFormat(unformattedImgArrForUpdatingCol, colToUpdateTitle).images; 
-        let existingImages = collection4Update.images; 
-        let updatedImgArray = [...existingImages, ...newImages]; 
-            
-        const formattedInput = {
-            title: colToUpdateTitle,
-            images: updatedImgArray
-        }
-
-        await axios.put(`http://localhost:3001/api/collections/${colIDToUpdate}`, formattedInput)
-        .then(function (response) {
-        })
-        .catch(function (error) {
-            console.log(error);
-        });
-        setSelectedResults([]);    
-    }      
-    
-    useEffect(() => {
-        const triggerUpdate = () => {
-            if (collection4Update.title){
-                updateExistingCollection(selectedResults, collection4Update._id, collection4Update.title); 
-            }
-        }
-        triggerUpdate(); 
-    }, [collection4Update]); 
        
     return (
         <div className="app">
@@ -113,9 +51,8 @@ const App = () => {
         <Route path="/queue">
             <Queue
                 selectedResults={selectedResults}
+                setSelectedResults={setSelectedResults}
                 deselectFromQueue={deselectFromQueue}
-                createNewCollection={createNewCollection} 
-                updateCollection={updateCollection}
                 setListCollections={setListCollections}
                 listCollections={listCollections}
             />

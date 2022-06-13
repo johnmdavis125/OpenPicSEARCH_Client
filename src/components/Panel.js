@@ -39,7 +39,12 @@ const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
     let renderedImages;
     renderedImages = filteredArray.map((image) => {
         return (
-            <ImageCard key={image.id} image={image} apiName={apiName} updateQueue={updateQueue} />
+            <ImageCard
+                key={image.id}
+                image={image}
+                apiName={apiName}
+                updateQueue={updateQueue}
+            />
         )
     });
 
