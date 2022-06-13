@@ -1,3 +1,53 @@
+import axios from 'axios'; 
+
+const configImageCardQueue = (image) => {
+    let config = {
+        imageTitle: '',
+        imgSrc: '',
+        apiName: '',
+        photographer: '',
+        portfolioLink: ''
+    };
+    
+    if (image.hasOwnProperty('urls')){
+        config = {
+            imageTitle: image.description ? image.description : 'Untitled',
+            imgSrc: image.urls.regular,
+            apiName: 'Unsplash',
+            photographer: image.user.name,
+            portfolioLink: image.user.links.portfolio
+        }
+    } else if (image.hasOwnProperty('src')){
+        config = {
+            imageTitle: image.alt ? image.alt : 'Untitled',
+            imgSrc: image.src.medium,
+            apiName: 'Pexels',
+            photographer: image.photographer,
+            portfolioLink: image.photographer_url
+        }  
+    } else if (image.hasOwnProperty('webformatURL')){
+        config = {
+            imageTitle: image.tags ? image.tags : 'Untitled',
+            imgSrc: image.webformatURL,
+            apiName: 'Pixabay',
+            photographer: image.user,
+            portfolioLink: image.userImageURL
+        }   
+    } else {
+        console.log('hasOwnProperty conditional did not work in ImageCardQueue'); 
+    }
+    return config;
+}
+
+const deleteCollection = async (collectionID) => {
+    try {
+        const response = await axios.delete(`http://localhost:3001/api/collections/${collectionID}`); 
+        console.log(response); 
+    } catch (error) {
+        console.error(error); 
+    }
+}
+
 const formatImgArray = (unformattedImgArrForNewCol, colTitle) => {
     console.log('call formatImgArray'); 
     let formattedImgArr = unformattedImgArrForNewCol.map((image) => {
@@ -39,43 +89,9 @@ const formatImgArray = (unformattedImgArrForNewCol, colTitle) => {
     return formattedInput;
 }
 
-const configImageCardQueue = (image) => {
-    let config = {
-        imageTitle: '',
-        imgSrc: '',
-        apiName: '',
-        photographer: '',
-        portfolioLink: ''
-      };
-    
-      if (image.hasOwnProperty('urls')){
-        config = {
-            imageTitle: image.description ? image.description : 'Untitled',
-            imgSrc: image.urls.regular,
-            apiName: 'Unsplash',
-            photographer: image.user.name,
-            portfolioLink: image.user.links.portfolio
-        }
-      } else if (image.hasOwnProperty('src')){
-        config = {
-            imageTitle: image.alt ? image.alt : 'Untitled',
-            imgSrc: image.src.medium,
-            apiName: 'Pexels',
-            photographer: image.photographer,
-            portfolioLink: image.photographer_url
-        }  
-      } else if (image.hasOwnProperty('webformatURL')){
-        config = {
-            imageTitle: image.tags ? image.tags : 'Untitled',
-            imgSrc: image.webformatURL,
-            apiName: 'Pixabay',
-            photographer: image.user,
-            portfolioLink: image.userImageURL
-        }   
-      } else {
-          console.log('hasOwnProperty conditional did not work in ImageCardQueue'); 
-      }
-      return config;
+const hidePanelsWhileLoading = () => {
+    const PanelContainer = document.querySelector('.panelContainer'); 
+    PanelContainer.style.opacity = 0;
 }
 
 const gracefullyLoad = () => {
@@ -96,14 +112,11 @@ const gracefullyLoad = () => {
     }
 }
 
-const hidePanelsWhileLoading = () => {
-    const PanelContainer = document.querySelector('.panelContainer'); 
-    PanelContainer.style.opacity = 0;
-}
 
 export { 
-    formatImgArray,
     configImageCardQueue,
-    hidePanelsWhileLoading,
-    gracefullyLoad
+    deleteCollection,
+    formatImgArray,
+    gracefullyLoad,
+    hidePanelsWhileLoading
 }

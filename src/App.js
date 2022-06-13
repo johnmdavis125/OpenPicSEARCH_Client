@@ -11,6 +11,7 @@ import './components/componentStyles/App.css';
 import {formatImgArray as reFormat} from './components/utils/utilMethods.mjs';
 
 const App = () => { 
+// User searches for images & makes selections (adds to queue/removes from queue)
     const [mostRecentSearch, setMostRecentSearch] = useState('random'); 
     const [selectedResults, setSelectedResults] = useState([]); 
 
@@ -32,8 +33,7 @@ const App = () => {
             setSelectedResults([...selectedResults, image]); 
         }
     }
-    
-
+// User creates new collections or updates existing collections
     const [listCollections, setListCollections] = useState([]); 
     const [collection4Update, setCollection4Update] = useState({}); 
     
@@ -96,16 +96,7 @@ const App = () => {
         }
         triggerUpdate(); 
     }, [collection4Update]); 
-    
-    const deleteCollection = async (collectionID) => {
-        try {
-            const response = await axios.delete(`http://localhost:3001/api/collections/${collectionID}`); 
-            console.log(response); 
-        } catch (error) {
-            console.error(error); 
-        }
-    }
-    
+       
     return (
         <div className="app">
         <Header />
@@ -133,7 +124,6 @@ const App = () => {
             <Collections 
                 listCollections={listCollections}
                 setListCollections={setListCollections}
-                deleteCollection={deleteCollection}
             />
         </Route>
     </div>
