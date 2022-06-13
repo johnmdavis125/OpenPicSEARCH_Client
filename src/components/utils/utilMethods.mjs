@@ -39,6 +39,45 @@ const formatImgArray = (unformattedImgArrForNewCol, colTitle) => {
     return formattedInput;
 }
 
+const configImageCardQueue = (image) => {
+    let config = {
+        imageTitle: '',
+        imgSrc: '',
+        apiName: '',
+        photographer: '',
+        portfolioLink: ''
+      };
+    
+      if (image.hasOwnProperty('urls')){
+        config = {
+            imageTitle: image.description ? image.description : 'Untitled',
+            imgSrc: image.urls.regular,
+            apiName: 'Unsplash',
+            photographer: image.user.name,
+            portfolioLink: image.user.links.portfolio
+        }
+      } else if (image.hasOwnProperty('src')){
+        config = {
+            imageTitle: image.alt ? image.alt : 'Untitled',
+            imgSrc: image.src.medium,
+            apiName: 'Pexels',
+            photographer: image.photographer,
+            portfolioLink: image.photographer_url
+        }  
+      } else if (image.hasOwnProperty('webformatURL')){
+        config = {
+            imageTitle: image.tags ? image.tags : 'Untitled',
+            imgSrc: image.webformatURL,
+            apiName: 'Pixabay',
+            photographer: image.user,
+            portfolioLink: image.userImageURL
+        }   
+      } else {
+          console.log('hasOwnProperty conditional did not work in ImageCardQueue'); 
+      }
+      return config;
+}
+
 const gracefullyLoad = () => {
     let delayLoad = setInterval(loadPanels, 1500); 
     function loadPanels(){
@@ -64,6 +103,7 @@ const hidePanelsWhileLoading = () => {
 
 export { 
     formatImgArray,
+    configImageCardQueue,
     hidePanelsWhileLoading,
     gracefullyLoad
 }
