@@ -8,7 +8,7 @@ import Queue from './components/Queue';
 import Collections from './components/Collections'; 
 import About from './components/About'; 
 import './components/componentStyles/App.css';
-import formatImgArray from './components/utils/utilMethods.mjs';
+import {formatImgArray as reFormat} from './components/utils/utilMethods.mjs';
 
 const App = () => { 
     const [mostRecentSearch, setMostRecentSearch] = useState('random'); 
@@ -38,7 +38,7 @@ const App = () => {
     const [collection4Update, setCollection4Update] = useState({}); 
     
     const createNewCollection = (unformattedImgArrForNewCol, colTitle) => {
-        let formattedInput = formatImgArray(unformattedImgArrForNewCol, colTitle); 
+        let formattedInput = reFormat(unformattedImgArrForNewCol, colTitle); 
         
         axios.post('http://localhost:3001/api/collections', formattedInput)
         .then(function (response) {
@@ -70,7 +70,7 @@ const App = () => {
     }      
     
     const updateExistingCollection = async (unformattedImgArrForUpdatingCol, colIDToUpdate, colToUpdateTitle) => {
-        let newImages = formatImgArray(unformattedImgArrForUpdatingCol, colToUpdateTitle).images; 
+        let newImages = reFormat(unformattedImgArrForUpdatingCol, colToUpdateTitle).images; 
         let existingImages = collection4Update.images; 
         let updatedImgArray = [...existingImages, ...newImages]; 
             

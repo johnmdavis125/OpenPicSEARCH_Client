@@ -1,6 +1,6 @@
 import React from 'react';
 import Panel from './Panel'; 
-import { useState } from 'react'; 
+import { useState, useEffect } from 'react'; 
 import CustomDropDown from './CustomDropdown';
 import "./componentStyles/PanelContainer.css";
 
@@ -126,23 +126,40 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
          }
     }       
 
+    // useEffect(() => {
+    //     const PanelContainer = document.querySelector('.panelContainer'); 
+    //     let opac = 0; 
+    //     let itr8 = setInterval(loadPanel, 50);
+
+    //     function loadPanel() {
+    //         opac += 0.05;
+    //         if (opac > 0.99){
+    //             clearInterval(itr8);
+    //         }
+    //         console.log(`opac: ${opac}`)
+    //         PanelContainer.style.opacity = opac;
+    //     }
+    // },[]);
+
     const options = ['Pexels', 'Unsplash', 'Pixabay'];
     const eventKeys = ['pexels', 'unsplash', 'pixabay'];
     return (
-        <div className="PanelContainer">
-            <div style={{display: 'flex', overflowX: 'auto', margin: '5px'}}>
-                {itemsToRender}
-            </div>
-            <div style={{minWidth: '20%', marginLeft: '40%', marginRight: '40%'}}>
-                <CustomDropDown className="panelDropdown" 
-                    onSelect={onAddPanelDropdownClick}
-                    btnLabel='Add Panel' 
-                    customOptions={options}
-                    dropdownDisabled={dropdownDisabled}
-                    eventKeys={eventKeys}
-                />
-            </div>
-        </div> 
+        <div className="loadingBackground">
+            <div className="panelContainer">
+                <div style={{display: 'flex', overflowX: 'auto', margin: '5px'}}>
+                    {itemsToRender}
+                </div>
+                <div style={{minWidth: '20%', marginLeft: '40%', marginRight: '40%'}}>
+                    <CustomDropDown className="panelDropdown" 
+                        onSelect={onAddPanelDropdownClick}
+                        btnLabel='Add Panel' 
+                        customOptions={options}
+                        dropdownDisabled={dropdownDisabled}
+                        eventKeys={eventKeys}
+                    />
+                </div>
+            </div> 
+        </div>
     )
 }
 

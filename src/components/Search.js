@@ -5,6 +5,7 @@ import axios from 'axios';
 import SearchBar from './SearchBar';
 import PanelContainer from './PanelContainer';
 import './componentStyles/Search.css';
+import { hidePanelsWhileLoading, gracefullyLoad } from './utils/utilMethods.mjs';
 const UNSPLASH_KEY = process.env.REACT_APP_UNSPLASH_API_KEY;  
 const PEXELS_KEY = process.env.REACT_APP_PEXELS_API_KEY;   
 const PIXABAY_KEY = process.env.REACT_APP_PIXABAY_API_KEY;
@@ -80,8 +81,10 @@ const Search = ({ mostRecentSearch, setMostRecentSearch, updateQueue }) => {
 
     useEffect(() => {
         if (mostRecentSearch){
+            hidePanelsWhileLoading(); 
             runAPISearch(mostRecentSearch);
         }
+        gracefullyLoad(); 
     },[mostRecentSearch]);
 
     const runBrowserSearch = () => {

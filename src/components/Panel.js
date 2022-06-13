@@ -49,30 +49,34 @@ const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
     }
 
     return (
-        <div className="panelMainDiv">
-            <div className="upperDiv">
-                <h5 className="panelTitle" style={{paddingLeft: '15px'}}>{apiName}</h5>
-                <CloseButton onClick={deleteClickHelper} className="closeButton" style={{color: 'white', opacity: '0.5', paddingRight: '15px'}} variant='white'></CloseButton>
-                
+            <div className="panelMainDiv">
+                <div className="upperDiv">
+                    <h5 className="panelTitle" style={{paddingLeft: '15px'}}>{apiName}</h5>
+                    <CloseButton 
+                        onClick={deleteClickHelper} 
+                        className="closeButton" 
+                        style={{color: 'white', opacity: '0.5', paddingRight: '15px'}} 
+                        variant='white'>
+                    </CloseButton>
+                </div>
+                <div className="lowerDiv" style={{display: 'flex'}}>
+                    <button
+                        onClick={decrementResults}
+                        disabled={leftButtonDisabled}
+                        className="prev">&#8249;
+                    </button>
+
+                    <div style={{flexBasis: '90%'}} className="imagesContainer">
+                        {renderedImages}
+                    </div>        
+
+                    <button 
+                        onClick={incrementResults}
+                        disabled={rightButtonDisabled}
+                        className="next">&#8250;
+                    </button>
+                </div>
             </div>
-
-            <div className="lowerDiv" style={{display: 'flex'}}>
-                <button
-                    onClick={decrementResults}
-                    disabled={leftButtonDisabled}
-                    className="prev">&#8249;
-                </button>
-
-                <div style={{flexBasis: '90%'}} className="imagesContainer">    {renderedImages}
-                </div>        
-
-                <button 
-                    onClick={incrementResults}
-                    disabled={rightButtonDisabled}
-                    className="next">&#8250;
-                </button>
-            </div>
-        </div>
     )
 }
 

@@ -39,4 +39,31 @@ const formatImgArray = (unformattedImgArrForNewCol, colTitle) => {
     return formattedInput;
 }
 
-export default formatImgArray; 
+const gracefullyLoad = () => {
+    let delayLoad = setInterval(loadPanels, 1500); 
+    function loadPanels(){
+        const PanelContainer = document.querySelector('.panelContainer'); 
+        let opac = 0; 
+        
+        let itr8 = setInterval(load, 10);
+        function load() {
+            opac += 0.03;
+            if (opac > 0.99){
+                clearInterval(itr8);
+                clearInterval(delayLoad); 
+            }
+            PanelContainer.style.opacity = opac;
+        }
+    }
+}
+
+const hidePanelsWhileLoading = () => {
+    const PanelContainer = document.querySelector('.panelContainer'); 
+    PanelContainer.style.opacity = 0;
+}
+
+export { 
+    formatImgArray,
+    hidePanelsWhileLoading,
+    gracefullyLoad
+}
