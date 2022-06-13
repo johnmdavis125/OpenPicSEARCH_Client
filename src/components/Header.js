@@ -20,16 +20,16 @@ const Header = () => {
                 <Row>
                     <Nav className="justify-content-end customNav">
                         <Nav.Item>
-                                <Link href="/about" className='customNavLink' >About</Link>
+                                <Link href="/about" className='customNavLink'>About</Link>
                         </Nav.Item>
                         <Nav.Item>
-                                <Link href="/" className='customNavLink' >Search</Link>
+                                <Link href="/" className='customNavLink'>Search</Link>
                         </Nav.Item>
                         <Nav.Item>
-                                <Link href="/queue" className='customNavLink' >Queue</Link>
+                                <Link href="/queue" className='customNavLink queueTitle'>Queue</Link>
                         </Nav.Item>
                         <Nav.Item>
-                                <Link href="/collections" className='customNavLink' >Collections</Link>
+                                <Link href="/collections" className='customNavLink'>Collections</Link>
                         </Nav.Item>
                     </Nav>
                 </Row>

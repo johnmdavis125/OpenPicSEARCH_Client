@@ -12,7 +12,6 @@ const SearchBar = ({ onSubmit, setMostRecentSearch, onSelect }) => {
     const onFormSubmit = (event) => {
         event.preventDefault(); 
         onSubmit(term);
-        console.log(onSubmit);  
         setMostRecentSearch(term); 
     }
 

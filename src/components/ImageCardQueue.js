@@ -3,14 +3,16 @@ import { useState, useEffect, useRef } from 'react';
 import Card from 'react-bootstrap/Card';
 import CloseButton from 'react-bootstrap/CloseButton';
 import './componentStyles/ImageCardQueue.css';
+import { configImageCardQueue } from './utils/utilMethods.mjs';
 
 const ImageCardQueue = ({ image, deselectFromQueue }) => {
     
+    // User Deselects Image from Queue
     const deselect = () => {
         deselectFromQueue(image); 
     }
 
-   // Image Positioning
+   // Onload, set image positioning
    const [spans, setSpans] = useState(0);
    const ref = useRef(); 
    
@@ -25,42 +27,8 @@ const ImageCardQueue = ({ image, deselectFromQueue }) => {
     } 
    },[]);
 
-let config = {
-    imageTitle: '',
-    imgSrc: '',
-    apiName: '',
-    photographer: '',
-    portfolioLink: ''
-  };
-
-  if (image.hasOwnProperty('urls')){
-    config = {
-        imageTitle: image.description ? image.description : 'Untitled',
-        imgSrc: image.urls.regular,
-        apiName: 'Unsplash',
-        photographer: image.user.name,
-        portfolioLink: image.user.links.portfolio
-    }
-  } else if (image.hasOwnProperty('src')){
-    config = {
-        imageTitle: image.alt ? image.alt : 'Untitled',
-        imgSrc: image.src.medium,
-        apiName: 'Pexels',
-        photographer: image.photographer,
-        portfolioLink: image.photographer_url
-    }  
-  } else if (image.hasOwnProperty('webformatURL')){
-    config = {
-        imageTitle: image.tags ? image.tags : 'Untitled',
-        imgSrc: image.webformatURL,
-        apiName: 'Pixabay',
-        photographer: image.user,
-        portfolioLink: image.userImageURL
-    }   
-  } else {
-      console.log('hasOwnProperty conditional did not work in ImageCardQueueNew'); 
-  }
-
+   // Configure cards in queue per source
+   let config = configImageCardQueue(image); 
 
     return (
         <Card style={{ gridRowEnd: `span ${spans}`, width: '800px'}} className='queueCard'>

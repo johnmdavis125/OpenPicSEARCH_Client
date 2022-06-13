@@ -12,19 +12,16 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
         pixabay: 1
     }); 
 
-
     let panelsInput;
     let numPexelsPanels = panels.pexels; 
     let numUnsplashPanels = panels.unsplash;
-    let numPixabayPanels = panels.pixabay;  
+    let numPixabayPanels = panels.pixabay;  // object destructuring
     
     // Delete Panels Button(s)
-    const onDeleteClick = (clickedPanel) => {
-        console.log(`delete button clicked on panel: ${clickedPanel}`); 
-        
-        if (clickedPanel === 'Pexels' && numPexelsPanels === 0){
+    const onDeleteBtnClick = (panelName) => {             
+        if (panelName === 'Pexels' && numPexelsPanels === 0){
             return; 
-        } else if (clickedPanel === 'Pexels'){
+        } else if (panelName === 'Pexels'){
             panelsInput = {
             pexels: numPexelsPanels - 1,
             unsplash: numUnsplashPanels,
@@ -32,9 +29,9 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
             }
         }
 
-        if (clickedPanel === 'Unsplash' && numUnsplashPanels === 0){
+        if (panelName === 'Unsplash' && numUnsplashPanels === 0){
             return;
-        } else if (clickedPanel === 'Unsplash'){
+        } else if (panelName === 'Unsplash'){
             panelsInput = {
                 pexels: numPexelsPanels,
                 unsplash: numUnsplashPanels - 1,
@@ -42,9 +39,9 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
             }
         }
        
-        if (clickedPanel === 'Pixabay' && numPixabayPanels === 0){
+        if (panelName === 'Pixabay' && numPixabayPanels === 0){
             return;
-        } else if (clickedPanel === 'Pixabay'){
+        } else if (panelName === 'Pixabay'){
             panelsInput = {
                 pexels: numPexelsPanels,
                 unsplash: numUnsplashPanels,
@@ -89,35 +86,34 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
 
     // Conditional Render Panels
     let arrKeys = Object.keys(panels);
-    let itemsToRender = []; 
-    let panelKey = 'panel';
+    let panelsToRender = []; 
     for (let i = 0; i < arrKeys.length; i++){
          for (let j = 0; j < panels[arrKeys[i]]; j++){
             if (arrKeys[i] === 'unsplash'){
-                itemsToRender.push(
+                panelsToRender.push(
                     <Panel
-                        key={`${panels.unsplash}${panelKey}${i}`}  
+                        key={`${panels.unsplash}panel${i}`}  
                         images={unsplashImages}
                         apiName='Unsplash'
-                        onDeleteClick={onDeleteClick}
+                        onDeleteBtnClick={onDeleteBtnClick}
                         updateQueue={updateQueue}
                     />);
             } else if (arrKeys[i] === 'pexels'){
-                itemsToRender.push(
+                panelsToRender.push(
                     <Panel 
-                        key={`${panels.pexels}${panelKey}${i}`}
+                        key={`${panels.pexels}panel${i}`}
                         images={pexelsImages}
                         apiName='Pexels'
-                        onDeleteClick={onDeleteClick}
+                        onDeleteBtnClick={onDeleteBtnClick}
                         updateQueue={updateQueue}
                     />);
             } else if (arrKeys[i] === 'pixabay'){
-                itemsToRender.push(
+                panelsToRender.push(
                     <Panel  
-                        key={`${panels.pixabay}${panelKey}${i}`}    
+                        key={`${panels.pixabay}panel${i}`}    
                         images={pixabayImages} 
                         apiName='Pixabay'
-                        onDeleteClick={onDeleteClick}
+                        onDeleteBtnClick={onDeleteBtnClick}
                         updateQueue={updateQueue}
                     />);
             } else {
@@ -129,20 +125,22 @@ const PanelContainer = ({ unsplashImages, pexelsImages, pixabayImages, updateQue
     const options = ['Pexels', 'Unsplash', 'Pixabay'];
     const eventKeys = ['pexels', 'unsplash', 'pixabay'];
     return (
-        <div className="PanelContainer">
-            <div style={{display: 'flex', overflowX: 'auto', margin: '5px'}}>
-                {itemsToRender}
-            </div>
-            <div style={{minWidth: '20%', marginLeft: '40%', marginRight: '40%'}}>
-                <CustomDropDown className="panelDropdown" 
-                    onSelect={onAddPanelDropdownClick}
-                    btnLabel='Add Panel' 
-                    customOptions={options}
-                    dropdownDisabled={dropdownDisabled}
-                    eventKeys={eventKeys}
-                />
-            </div>
-        </div> 
+        <div className="loadingBackground">
+            <div className="panelContainer">
+                <div style={{display: 'flex', overflowX: 'auto', margin: '5px'}}>
+                    {panelsToRender}
+                </div>
+                <div style={{minWidth: '20%', marginLeft: '40%', marginRight: '40%'}}>
+                    <CustomDropDown className="panelDropdown" 
+                        onSelect={onAddPanelDropdownClick}
+                        btnLabel='Add Panel' 
+                        customOptions={options}
+                        dropdownDisabled={dropdownDisabled}
+                        eventKeys={eventKeys}
+                    />
+                </div>
+            </div> 
+        </div>
     )
 }
 

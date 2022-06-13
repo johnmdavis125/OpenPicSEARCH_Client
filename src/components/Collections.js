@@ -5,9 +5,9 @@ import Card from 'react-bootstrap/Card';
 import Button from 'react-bootstrap/Button'; 
 import CloseButton from 'react-bootstrap/CloseButton';
 import './componentStyles/Collections.css'; 
+import { deleteCollection } from './utils/utilMethods.mjs';
 
-
-const Collections = ({ listCollections, setListCollections, deleteCollection }) => {
+const Collections = ({ listCollections, setListCollections }) => {
 
     const [collection, setCollection] = useState({}); 
 
@@ -49,6 +49,16 @@ const Collections = ({ listCollections, setListCollections, deleteCollection }) 
             });
     }
     getRenderedCollectionsList(); 
+
+    // const deleteCollection = async (collectionID) => {
+    //     try {
+    //         const response = await axios.delete(`http://localhost:3001/api/collections/${collectionID}`); 
+    //         console.log(response); 
+    //     } catch (error) {
+    //         console.error(error); 
+    //     }
+    // }
+    
 
     
     const deleteMe = () => {

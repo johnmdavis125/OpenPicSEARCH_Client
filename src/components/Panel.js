@@ -4,7 +4,7 @@ import ImageCard from './ImageCard';
 import CloseButton from 'react-bootstrap/CloseButton';
 import "./componentStyles/Panel.css";
 
-const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
+const Panel = ({images, apiName, onDeleteBtnClick, updateQueue }) => {
     
     // Pagination
     const [currentPage, setCurrentPage] = useState(0);
@@ -39,40 +39,49 @@ const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
     let renderedImages;
     renderedImages = filteredArray.map((image) => {
         return (
-            <ImageCard key={image.id} image={image} apiName={apiName} updateQueue={updateQueue} />
+            <ImageCard
+                key={image.id}
+                image={image}
+                apiName={apiName}
+                updateQueue={updateQueue}
+            />
         )
     });
 
     // Delete Button
     const deleteClickHelper = () => {       
-        onDeleteClick(apiName); 
+        onDeleteBtnClick(apiName); 
     }
 
     return (
-        <div className="panelMainDiv">
-            <div className="upperDiv">
-                <h5 className="panelTitle" style={{paddingLeft: '15px'}}>{apiName}</h5>
-                <CloseButton onClick={deleteClickHelper} className="closeButton" style={{color: 'white', opacity: '0.5', paddingRight: '15px'}} variant='white'></CloseButton>
-                
+            <div className="panelMainDiv">
+                <div className="upperDiv">
+                    <h5 className="panelTitle" style={{paddingLeft: '15px'}}>{apiName}</h5>
+                    <CloseButton 
+                        onClick={deleteClickHelper} 
+                        className="closeButton" 
+                        style={{color: 'white', opacity: '0.5', paddingRight: '15px'}} 
+                        variant='white'>
+                    </CloseButton>
+                </div>
+                <div className="lowerDiv" style={{display: 'flex'}}>
+                    <button
+                        onClick={decrementResults}
+                        disabled={leftButtonDisabled}
+                        className="prev">&#8249;
+                    </button>
+
+                    <div style={{flexBasis: '90%'}} className="imagesContainer">
+                        {renderedImages}
+                    </div>        
+
+                    <button 
+                        onClick={incrementResults}
+                        disabled={rightButtonDisabled}
+                        className="next">&#8250;
+                    </button>
+                </div>
             </div>
-
-            <div className="lowerDiv" style={{display: 'flex'}}>
-                <button
-                    onClick={decrementResults}
-                    disabled={leftButtonDisabled}
-                    className="prev">&#8249;
-                </button>
-
-                <div style={{flexBasis: '90%'}} className="imagesContainer">    {renderedImages}
-                </div>        
-
-                <button 
-                    onClick={incrementResults}
-                    disabled={rightButtonDisabled}
-                    className="next">&#8250;
-                </button>
-            </div>
-        </div>
     )
 }
 
