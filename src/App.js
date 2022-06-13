@@ -1,6 +1,5 @@
-import React, { useEffect } from 'react'; 
-import { useState } from 'react';
-import axios from 'axios'; 
+import React from 'react'; 
+import { useState, useEffect } from 'react';
 import Route from './components/Route';
 import Header from './components/Header'; 
 import Search from './components/Search';
@@ -8,6 +7,7 @@ import Queue from './components/Queue';
 import Collections from './components/Collections'; 
 import About from './components/About'; 
 import './components/componentStyles/App.css';
+import { updateQueueLinkUserFeedback } from './components/utils/utilMethods.mjs'; 
 
 const App = () => { 
 
@@ -22,10 +22,9 @@ const App = () => {
             const right = selectedResults.slice(indexToRemove + 1); 
             const newArr = [...left, ...right];  
             setSelectedResults(newArr); 
-        } else {
-            console.log('image not present in selected results...weird'); 
         }
     }
+
     const updateQueue = (image) => {
         if (selectedResults.includes(image)){
             deselectFromQueue(image); 
@@ -33,8 +32,12 @@ const App = () => {
             setSelectedResults([...selectedResults, image]); 
         }
     }
-
-       
+    
+useEffect(() => {
+  updateQueueLinkUserFeedback(selectedResults); 
+},[selectedResults]);
+    
+    
     return (
         <div className="app">
         <Header />

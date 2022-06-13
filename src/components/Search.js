@@ -89,7 +89,7 @@ const Search = ({ mostRecentSearch, setMostRecentSearch, updateQueue }) => {
         }
         gracefullyLoad(); 
     },[mostRecentSearch]);
-    
+
 // Handle user browser search
     const runBrowserSearch = () => {
         console.log('run browser search'); 

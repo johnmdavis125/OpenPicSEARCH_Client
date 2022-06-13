@@ -112,11 +112,28 @@ const gracefullyLoad = () => {
     }
 }
 
+const updateQueueLinkUserFeedback = (selectedResults) => {
+    const queueTitle = document.querySelector('.queueTitle'); 
+    if (selectedResults.length > 0){
+        queueTitle.style.color = 'rgb(0,229,255)';
+        queueTitle.style.boxShadow = '1px 0 2px 2px rgb(0,229,255)';
+        queueTitle.style.background = 'rgba(15,15,15,0.5';
+        queueTitle.style.fontWeight = 'bold'; 
+        queueTitle.style.textTransform = 'uppercase'; 
+    } else {
+        queueTitle.style.color = 'white';
+        queueTitle.style.boxShadow = '0 0 0 0';
+        queueTitle.style.background = 'none';
+        queueTitle.style.fontWeight = 'normal'; 
+        queueTitle.style.textTransform = 'capitalize'; 
+    }
+}
 
 export { 
     configImageCardQueue,
     deleteCollection,
     formatImgArray,
     gracefullyLoad,
-    hidePanelsWhileLoading
+    hidePanelsWhileLoading,
+    updateQueueLinkUserFeedback
 }

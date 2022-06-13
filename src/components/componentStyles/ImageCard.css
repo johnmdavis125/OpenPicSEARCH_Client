@@ -1,9 +1,9 @@
 .image:hover {
     cursor: pointer;
-    border: 4px solid rgb(0, 229, 255);
+    border: 5px solid gold;
 }
 
 .selected {
-    border: 5px solid gold;
+    border: 4px solid rgb(0, 229, 255);
     opacity: 0.5;
 }

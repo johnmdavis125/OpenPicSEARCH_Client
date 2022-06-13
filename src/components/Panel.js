@@ -4,7 +4,7 @@ import ImageCard from './ImageCard';
 import CloseButton from 'react-bootstrap/CloseButton';
 import "./componentStyles/Panel.css";
 
-const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
+const Panel = ({images, apiName, onDeleteBtnClick, updateQueue }) => {
     
     // Pagination
     const [currentPage, setCurrentPage] = useState(0);
@@ -50,7 +50,7 @@ const Panel = ({images, apiName, onDeleteClick, updateQueue }) => {
 
     // Delete Button
     const deleteClickHelper = () => {       
-        onDeleteClick(apiName); 
+        onDeleteBtnClick(apiName); 
     }
 
     return (
