@@ -1,70 +1,41 @@
-# Getting Started with Create React App
+Overview
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
++ OpenPix is a full-stack MERN application intended to expedite the process of searching for open domain images/assets for creative design projects. This is accomplished by accepting a single search term into the OpenPix UI searchbar, which prompts simultaneous API pulls from multiple popular public domain resource sites such as Pexels, Unsplash, & Pixabay. Search results can be individually selected & saved to a queue, where the user can save them into custom collections they’ve created. 
 
-## Available Scripts
+Project Status: Incomplete, but basic MVP for “Search”, “Queue”, & “Collections” in place and ready for demo. 
 
-In the project directory, you can run:
+Background
 
-### `npm start`
++ All of my portfolio projects are tools I use to support my side-hustle business projects oriented around graphic design, self-publishing, & media production. 
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
++ OpenPix enables me to limit all or most of my searching for public domain assets to a single UI, and incrementally add additional resources to pull from as I discover them. 
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Design Pattern: MVC
 
-### `npm test`
+Technologies Used: 
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
++ React.js (w/Hooks)
 
-### `npm run build`
++ React Bootstrap
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
++ Express.js (w/RESTful API)
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
++ Node.js
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
++ MongoDB Atlas (Cloud)
 
-### `npm run eject`
+Main Features: 
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
++ React state management (traditional, cascading state & callbacks)  
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
++ Asynchronous Javascript: Public API calls, AJAX requests
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
++ Pagination
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
++ React Navigation (w/out React Router)
 
-## Learn More
++ User feedback Animations
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
++ Conditional Rendering 
 
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
++ Full CRUD
